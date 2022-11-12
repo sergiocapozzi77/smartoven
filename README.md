@@ -6,6 +6,11 @@ The project has 2 modules:
 - the firmware of the oven: is the firmware written for an ESP32 board that controls the oven.
 - the app: is a Xamarin app that get all the information regarding temperature, recipe, etc... from the ESP32 via Bluetooth. Also the app is able to send command to the Oven like switch on, off, set temperature, etc..
 
+<p align="center">
+  <img src="./img/oven.jpg" alt="Oven" width="400">
+  <img src="./img/pizza.jpg" alt="Oven" width="400">
+</p>
+
 # How SmartOven works
 
 Smart Oven is a classic oven with two heating elements, one on the top and one on the bottom. The difference from a standard oven is that the two elements are not controlled by a classic thermostat with ugly knobs. Instead, in the Smart Oven, there is a tiny electronic module that include an ESP32 board and few others modules and sensors that control the Oven. The electronic constantly communicate with an app on your phone or tablet to transfer the information related to the current temprature measured by the sensors, and receive commands from the app to increase or decrease the desired temperature.
@@ -18,6 +23,7 @@ The ESP32 module communicate with two sensors to get the current top and bottom 
 # The App
 
 The app is developed using Xamarin and Syncfusion UI components. In order to build the project open the subfolder app/ with Visual Studio with Xamarin core installed.
+The app communicate using Bluetooth Low Energy with the ESP32, is using a very simple protocol to read the sensor temperatures from the ESP32 and to send commands. I've tested the app on Android, never compiled for IOS.
 
 TODO: Explain how other users and developers can contribute to make your code better.
 
