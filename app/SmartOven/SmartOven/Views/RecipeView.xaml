@@ -1,0 +1,236 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="SmartOvenV2.Views.RecipeView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:cards="clr-namespace:Syncfusion.XForms.Cards;assembly=Syncfusion.Cards.XForms"
+    xmlns:converters="clr-namespace:SmartOvenV2.Converters;assembly=SmartOvenV2"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:gauge="clr-namespace:Syncfusion.SfGauge.XForms;assembly=Syncfusion.SfGauge.XForms"
+    xmlns:listView="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:progressBar="clr-namespace:Syncfusion.XForms.ProgressBar;assembly=Syncfusion.SfProgressBar.XForms"
+    xmlns:tabView="clr-namespace:Syncfusion.XForms.TabView;assembly=Syncfusion.SfTabView.XForms"
+    xmlns:utilities="clr-namespace:SmartOvenV2.Utilities;assembly=SmartOvenV2"
+    Title="{Binding Title}"
+    utilities:ViewModelLocator.AutoWireViewModel="True"
+    NavigationPage.HasNavigationBar="False"
+    mc:Ignorable="d">
+    <ContentPage.Resources>
+        <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <tabView:SfTabView>
+            <tabView:SfTabItem Title="Cookbook">
+                <tabView:SfTabItem.Content>
+                    <Grid>
+                        <listView:SfListView
+                            Margin="0"
+                            Padding="0,5,0,5"
+                            BackgroundColor="#F0F0F0"
+                            ItemSize="{OnPlatform Android={OnIdiom Phone=100,
+                                                                   Tablet=100},
+                                                  iOS={OnIdiom Phone=100,
+                                                               Tablet=90},
+                                                  UWP={OnIdiom Phone=120,
+                                                               Tablet=150,
+                                                               Desktop=150},
+                                                  macOS=105,
+                                                  WPF=150}"
+                            ItemSpacing="10,5,10,5"
+                            ItemsSource="{Binding Recipes}"
+                            SelectedItem="{Binding SelectedItem}"
+                            SelectionMode="SingleDeselect">
+                            <listView:SfListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Frame
+                                        Padding="1"
+                                        BackgroundColor="White"
+                                        HasShadow="{OnPlatform Android=true,
+                                                               iOS=false,
+                                                               UWP=true,
+                                                               WPF=true}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="{OnPlatform Android={OnIdiom Phone=0.35*, Tablet=0.25*}, iOS={OnIdiom Phone=0.35*, Tablet=0.15*}, UWP={OnIdiom Desktop=auto, Phone=auto, Tablet=0.55*}, macOS=0.15*, WPF=auto}" />
+                                                <ColumnDefinition Width="{OnPlatform Android={OnIdiom Phone=0.65*, Tablet=0.75*}, iOS={OnIdiom Phone=0.65*, Tablet=0.85*}, UWP={OnIdiom Desktop=*, Phone=*, Tablet=0.15*}, macOS=*, WPF=*}" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <Image
+                                                Aspect="AspectFill"
+                                                HeightRequest="150"
+                                                HorizontalOptions="FillAndExpand"
+                                                Source="{Binding Image}"
+                                                VerticalOptions="FillAndExpand"
+                                                WidthRequest="150" />
+                                            <Grid Grid.Column="1">
+                                                <buttons:SfCheckBox
+                                                    CornerRadius="10"
+                                                    HeightRequest="28"
+                                                    HorizontalOptions="End"
+                                                    InputTransparent="True"
+                                                    IsChecked="{Binding Path=IsSelected}"
+                                                    VerticalOptions="Start"
+                                                    WidthRequest="28" />
+
+                                                <StackLayout Padding="10,0,0,0">
+                                                    <StackLayout.VerticalOptions>
+                                                        <OnPlatform x:TypeArguments="LayoutOptions">
+                                                            <On Platform="macOS" Value="CenterAndExpand" />
+                                                        </OnPlatform>
+                                                    </StackLayout.VerticalOptions>
+                                                    <Label
+                                                        FontAttributes="Bold"
+                                                        FontSize="{OnPlatform Android={OnIdiom Phone=18,
+                                                                                               Tablet=22},
+                                                                              iOS={OnIdiom Phone=18,
+                                                                                           Tablet=22},
+                                                                              UWP={OnIdiom Phone=16,
+                                                                                           Tablet=26,
+                                                                                           Desktop=26},
+                                                                              macOS=22,
+                                                                              WPF=26}"
+                                                        LineBreakMode="CharacterWrap"
+                                                        Text="{Binding ImageTitle}" />
+                                                    <Label FontSize="{OnPlatform Android={OnIdiom Phone=12, Tablet=13}, iOS={OnIdiom Phone=11, Tablet=13}, UWP={OnIdiom Phone=10, Tablet=14, Desktop=16}, macOS=13, WPF=16}" Text="{Binding TopTemperature, StringFormat='Top Temperature: {0:F1}°'}" />
+                                                    <Label FontSize="{OnPlatform Android={OnIdiom Phone=12, Tablet=13}, iOS={OnIdiom Phone=11, Tablet=13}, UWP={OnIdiom Phone=10, Tablet=14, Desktop=16}, macOS=13, WPF=16}" Text="{Binding BottomTemperature, StringFormat='Bottom Temperature: {0:F1}°'}" />
+                                                </StackLayout>
+                                            </Grid>
+                                        </Grid>
+                                    </Frame>
+                                </DataTemplate>
+                            </listView:SfListView.ItemTemplate>
+                        </listView:SfListView>
+                    </Grid>
+                </tabView:SfTabItem.Content>
+
+            </tabView:SfTabItem>
+            <tabView:SfTabItem Title="Recipe">
+                <tabView:SfTabItem.Content>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <cards:SfCardView Grid.Row="0" Margin="10">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="40" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Label
+                                    BackgroundColor="White"
+                                    FontAttributes="Bold"
+                                    FontSize="18"
+                                    HorizontalTextAlignment="Center"
+                                    Text="{Binding SelectedRecipe.ImageTitle}"
+                                    TextColor="Gray"
+                                    VerticalTextAlignment="Center" />
+                                <Grid Grid.Row="1">
+                                    <progressBar:SfStepProgressBar
+                                        x:Name="stepProgress"
+                                        Margin="0,20,0,0"
+                                        BackgroundColor="Transparent"
+                                        BindableLayout.ItemsSource="{Binding SelectedRecipe.Steps}"
+                                        HorizontalOptions="Center"
+                                        Orientation="Vertical"
+                                        TitleAlignment="Start"
+                                        TitleSpace="10">
+                                        <BindableLayout.ItemTemplate>
+                                            <DataTemplate>
+                                                <progressBar:StepView
+                                                    x:Name="stepView"
+                                                    ProgressValue="{Binding ProgressValue}"
+                                                    Status="{Binding Status}">
+                                                    <progressBar:StepView.PrimaryFormattedText>
+                                                        <FormattedString>
+                                                            <Span
+                                                                FontAttributes="Bold"
+                                                                FontSize="Medium"
+                                                                Text="{Binding Title}" />
+                                                            <Span Text="&#10;&#10;" />
+                                                            <Span FontSize="Small" Text="{Binding Description}" />
+                                                        </FormattedString>
+                                                    </progressBar:StepView.PrimaryFormattedText>
+                                                    <progressBar:StepView.SecondaryFormattedText>
+                                                        <FormattedString>
+                                                            <Span
+                                                                FontAttributes="Bold"
+                                                                FontSize="Small"
+                                                                Text="{Binding Time}" />
+                                                            <Span Text="&#10;&#10;" />
+                                                            <Span Text="        " />
+                                                            <Span
+                                                                FontSize="Small"
+                                                                Text="{Binding Duration}"
+                                                                TextColor="#b6b0b2" />
+                                                        </FormattedString>
+                                                    </progressBar:StepView.SecondaryFormattedText>
+                                                </progressBar:StepView>
+                                            </DataTemplate>
+                                        </BindableLayout.ItemTemplate>
+                                    </progressBar:SfStepProgressBar>
+                                </Grid>
+                            </Grid>
+                        </cards:SfCardView>
+                        <cards:SfCardView Grid.Row="1" Margin="10,0,10,10">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="100" />
+                                    <RowDefinition Height="100" />
+                                </Grid.RowDefinitions>
+
+                                <gauge:SfDigitalGauge
+                                    Margin="14,0,0,0"
+                                    CharacterHeight="50"
+                                    CharacterStrokeColor="Blue"
+                                    CharacterType="EightCrossEightDotMatrix"
+                                    CharacterWidth="25"
+                                    DisabledSegmentAlpha="30"
+                                    DisabledSegmentColor="Gray"
+                                    HeightRequest="55"
+                                    HorizontalOptions="Center"
+                                    SegmentStrokeWidth="3"
+                                    VerticalOptions="Center"
+                                    WidthRequest="280"
+                                    Value="{Binding TimerValue}" />
+
+
+                                <Grid Grid.Row="1" HorizontalOptions="Fill">
+                                    <Grid>
+                                        <buttons:SfButton
+                                            Margin="10"
+                                            Command="{Binding StartCommand}"
+                                            CornerRadius="10"
+                                            FontSize="24"
+                                            HeightRequest="60"
+                                            IsVisible="{Binding CanStart}"
+                                            Text="START" />
+                                        <buttons:SfButton
+                                            Margin="10"
+                                            Command="{Binding PauseCommand}"
+                                            CornerRadius="10"
+                                            FontSize="24"
+                                            HeightRequest="60"
+                                            IsVisible="{Binding CanPause}"
+                                            Text="PAUSE" />
+                                    </Grid>
+                                    <buttons:SfButton
+                                        Grid.Column="1"
+                                        Margin="10,10,10,10"
+                                        Command="{Binding ResetCommand}"
+                                        CornerRadius="10"
+                                        FontSize="24"
+                                        Text="STOP" />
+
+                                </Grid>
+                            </Grid>
+                        </cards:SfCardView>
+                    </Grid>
+                </tabView:SfTabItem.Content>
+            </tabView:SfTabItem>
+        </tabView:SfTabView>
+
+    </ContentPage.Content>
+</ContentPage>

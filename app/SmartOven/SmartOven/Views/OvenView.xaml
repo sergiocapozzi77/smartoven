@@ -1,0 +1,461 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="SmartOvenV2.Views.OvenView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:converters="clr-namespace:SmartOvenV2.Converters;assembly=SmartOvenV2"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:gauge="clr-namespace:Syncfusion.SfGauge.XForms;assembly=Syncfusion.SfGauge.XForms"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:utilities="clr-namespace:SmartOvenV2.Utilities;assembly=SmartOvenV2"
+    xmlns:xForms="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
+    Title="{Binding Title}"
+    utilities:ViewModelLocator.AutoWireViewModel="True"
+    NavigationPage.HasNavigationBar="False"
+    mc:Ignorable="d">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid
+                x:Name="TitleView"
+                Grid.Row="0"
+                BackgroundColor="{DynamicResource Gray-White}"
+                HeightRequest="40"
+                HorizontalOptions="FillAndExpand">
+                <StackLayout HorizontalOptions="Start" Orientation="Horizontal">
+                    <buttons:SfSwitch
+                        Margin="20,0,10,0"
+                        BackgroundColor="Transparent"
+                        IsEnabled="{Binding IsConnected}"
+                        IsOn="{Binding IsLightOn}"
+                        VerticalOptions="Center"
+                        VisualType="Custom">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="LightCommonStates">
+                                <VisualState x:Name="On">
+                                    <VisualState.Setters>
+                                        <Setter Property="SwitchSettings">
+                                            <Setter.Value>
+                                                <buttons:DefaultSwitchSettings
+                                                    x:TypeArguments="buttons:OnState"
+                                                    TrackCornerRadius="24"
+                                                    TrackHeightRequest="25"
+                                                    TrackWidthRequest="55" />
+                                            </Setter.Value>
+                                        </Setter>
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                                <VisualState x:Name="Off">
+                                    <VisualState.Setters>
+                                        <Setter Property="SwitchSettings">
+                                            <Setter.Value>
+                                                <buttons:DefaultSwitchSettings
+                                                    x:TypeArguments="buttons:OffState"
+                                                    TrackCornerRadius="24"
+                                                    TrackHeightRequest="25"
+                                                    TrackWidthRequest="55" />
+                                            </Setter.Value>
+                                        </Setter>
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+
+                        </VisualStateManager.VisualStateGroups>
+                    </buttons:SfSwitch>
+
+                    <Image HeightRequest="20" Source="light.png" />
+                </StackLayout>
+                <!--  Event list page Title  -->
+                <Label
+                    Margin="0,0,0,0"
+                    FontFamily="{StaticResource Montserrat-Medium}"
+                    FontSize="16"
+                    HorizontalOptions="CenterAndExpand"
+                    Text="SMART OVEN"
+                    TextColor="{DynamicResource Gray-600}"
+                    VerticalOptions="Center"
+                    VerticalTextAlignment="Center" />
+
+                <buttons:SfSwitch
+                    Margin="0,0,10,0"
+                    BackgroundColor="Transparent"
+                    HorizontalOptions="End"
+                    IsEnabled="{Binding IsConnected}"
+                    IsOn="{Binding IsOvenOn}"
+                    VerticalOptions="Center"
+                    VisualType="Custom">
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="On">
+                                <VisualState.Setters>
+                                    <Setter Property="SwitchSettings">
+                                        <Setter.Value>
+                                            <buttons:DefaultSwitchSettings
+                                                x:TypeArguments="buttons:OnState"
+                                                TrackCornerRadius="24"
+                                                TrackHeightRequest="25"
+                                                TrackWidthRequest="55" />
+                                        </Setter.Value>
+                                    </Setter>
+                                </VisualState.Setters>
+                            </VisualState>
+
+                            <VisualState x:Name="Off">
+                                <VisualState.Setters>
+                                    <Setter Property="SwitchSettings">
+                                        <Setter.Value>
+                                            <buttons:DefaultSwitchSettings
+                                                x:TypeArguments="buttons:OffState"
+                                                TrackCornerRadius="24"
+                                                TrackHeightRequest="25"
+                                                TrackWidthRequest="55" />
+                                        </Setter.Value>
+                                    </Setter>
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+
+                    </VisualStateManager.VisualStateGroups>
+                </buttons:SfSwitch>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid Padding="5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <gauge:SfCircularGauge Grid.Row="0">
+                            <gauge:SfCircularGauge.Annotations>
+                                <gauge:GaugeAnnotation Angle="270" Offset="0.4">
+                                    <gauge:GaugeAnnotation.View>
+                                        <Image
+                                            HeightRequest="43"
+                                            IsVisible="{Binding TopElementOn, Converter={StaticResource InverseBoolConverter}}"
+                                            Source="Element.png"
+                                            WidthRequest="32" />
+                                    </gauge:GaugeAnnotation.View>
+                                </gauge:GaugeAnnotation>
+                                <gauge:GaugeAnnotation Angle="270" Offset="0.4">
+                                    <gauge:GaugeAnnotation.View>
+                                        <Image
+                                            HeightRequest="43"
+                                            IsVisible="{Binding TopElementOn}"
+                                            Source="ElementOn.png"
+                                            WidthRequest="32" />
+                                    </gauge:GaugeAnnotation.View>
+                                </gauge:GaugeAnnotation>
+                            </gauge:SfCircularGauge.Annotations>
+                            <gauge:SfCircularGauge.Headers>
+                                <gauge:Header
+                                    FontAttributes="Bold"
+                                    FontFamily="{StaticResource Montserrat-Medium}"
+                                    ForegroundColor="{DynamicResource Gray-800}"
+                                    Position="0.5, 0.4"
+                                    Text="Top"
+                                    TextSize="16" />
+                                <gauge:Header
+                                    FontAttributes="Bold"
+                                    FontFamily="{StaticResource Montserrat-Medium}"
+                                    ForegroundColor="{DynamicResource Gray-800}"
+                                    Position="0.5, 0.65"
+                                    Text="{Binding TopElementInfo}"
+                                    TextSize="16" />
+                            </gauge:SfCircularGauge.Headers>
+                            <gauge:SfCircularGauge.Scales>
+                                <gauge:Scale
+                                    EndValue="500"
+                                    Interval="50"
+                                    LabelOffset="0.65"
+                                    ShowRim="False"
+                                    StartValue="0">
+                                    <gauge:Scale.Pointers>
+                                        <gauge:NeedlePointer Type="Bar" Value="{Binding TopTemperature}" />
+                                        <gauge:MarkerPointer
+                                            EnableDragging="True"
+                                            MarkerHeight="20"
+                                            MarkerShape="InvertedTriangle"
+                                            MarkerWidth="20"
+                                            StepFrequency="1"
+                                            ValueChangeCompleted="MarkerPointer_TopValueChangeCompleted"
+                                            ValueChanging="MarkerPointer_TopValueChanging"
+                                            Offset="0.9"
+                                            Color="Black"
+                                            Value="{Binding TopDesiredTemperature}" />
+                                    </gauge:Scale.Pointers>
+                                    <gauge:Scale.MajorTickSettings>
+                                        <gauge:TickSettings EndOffset="0.8" StartOffset="0.75" />
+                                    </gauge:Scale.MajorTickSettings>
+
+                                    <gauge:Scale.MinorTickSettings>
+                                        <gauge:TickSettings EndOffset="0.8" StartOffset="0.77" />
+                                    </gauge:Scale.MinorTickSettings>
+                                    <gauge:Scale.Ranges>
+                                        <gauge:Range
+                                            EndValue="500"
+                                            StartValue="0"
+                                            Thickness="15"
+                                            Offset="0.9">
+                                            <gauge:Range.GradientStops>
+                                                <gauge:GaugeGradientStop Color="#30B32D" Value="0" />
+                                                <gauge:GaugeGradientStop Color="#FFDD00" Value="50" />
+                                                <gauge:GaugeGradientStop Color="#FFDD00" Value="100" />
+                                                <gauge:GaugeGradientStop Color="#F03E3E" Value="500" />
+                                            </gauge:Range.GradientStops>
+                                        </gauge:Range>
+                                    </gauge:Scale.Ranges>
+                                </gauge:Scale>
+                            </gauge:SfCircularGauge.Scales>
+                        </gauge:SfCircularGauge>
+                        <Grid
+                            Grid.Row="1"
+                            Margin="0,-40,0,0"
+                            HeightRequest="70">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <buttons:SfButton
+                                Margin="10,16,-10,16"
+                                Command="{Binding TopMinusPowerCommand}"
+                                CornerRadius="5"
+                                Text="-"
+                                WidthRequest="35" />
+                            <buttons:SfButton
+                                Grid.Column="2"
+                                Margin="-10,16,10,16"
+                                Command="{Binding TopPlusPowerCommand}"
+                                CornerRadius="5"
+                                HeightRequest="10"
+                                Text="+"
+                                WidthRequest="35" />
+                            <gauge:SfLinearGauge Grid.Column="1">
+                                <gauge:SfLinearGauge.Scales>
+                                    <gauge:LinearScale
+                                        Interval="25"
+                                        LabelColor="Black"
+                                        MinorTicksPerInterval="1"
+                                        ScaleBarSize="12">
+                                        <gauge:LinearScale.MajorTickSettings>
+                                            <gauge:LinearTickSettings
+                                                Length="3"
+                                                Thickness="1"
+                                                Color="Black" />
+                                        </gauge:LinearScale.MajorTickSettings>
+                                        <gauge:LinearScale.MinorTickSettings>
+                                            <gauge:LinearTickSettings
+                                                Length="1"
+                                                Thickness="1"
+                                                Color="Black" />
+                                        </gauge:LinearScale.MinorTickSettings>
+                                        <gauge:LinearScale.GradientStops>
+                                            <gauge:GaugeGradientStop Color="#30B32D" Value="0" />
+                                            <gauge:GaugeGradientStop Color="#FFDD00" Value="25" />
+                                            <gauge:GaugeGradientStop Color="#FFDD00" Value="60" />
+                                            <gauge:GaugeGradientStop Color="Red" Value="100" />
+                                        </gauge:LinearScale.GradientStops>
+                                        <gauge:LinearScale.Pointers>
+                                            <gauge:BarPointer
+                                                CornerRadius="10"
+                                                CornerRadiusType="Start"
+                                                EnableAnimation="true"
+                                                Thickness="20"
+                                                Color="#36d1dc"
+                                                Value="{Binding TopPower}" />
+                                            <gauge:SymbolPointer
+                                                Thickness="12"
+                                                Color="DeepSkyBlue"
+                                                Value="{Binding TopMaxPower}" />
+                                        </gauge:LinearScale.Pointers>
+
+                                    </gauge:LinearScale>
+                                </gauge:SfLinearGauge.Scales>
+                            </gauge:SfLinearGauge>
+                        </Grid>
+                    </Grid>
+
+                    <Grid Grid.Row="1" Padding="5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+
+                        </Grid.RowDefinitions>
+                        <gauge:SfCircularGauge>
+                            <gauge:SfCircularGauge.Annotations>
+                                <gauge:GaugeAnnotation Angle="270" Offset="0.4">
+                                    <gauge:GaugeAnnotation.View>
+                                        <Image
+                                            HeightRequest="43"
+                                            IsVisible="{Binding BottomElementOn, Converter={StaticResource InverseBoolConverter}}"
+                                            Source="Element.png"
+                                            WidthRequest="32" />
+                                    </gauge:GaugeAnnotation.View>
+                                </gauge:GaugeAnnotation>
+                                <gauge:GaugeAnnotation Angle="270" Offset="0.4">
+                                    <gauge:GaugeAnnotation.View>
+                                        <Image
+                                            HeightRequest="43"
+                                            IsVisible="{Binding BottomElementOn}"
+                                            Source="ElementOn.png"
+                                            WidthRequest="32" />
+                                    </gauge:GaugeAnnotation.View>
+                                </gauge:GaugeAnnotation>
+                            </gauge:SfCircularGauge.Annotations>
+                            <gauge:SfCircularGauge.Headers>
+                                <gauge:Header
+                                    FontAttributes="Bold"
+                                    FontFamily="{StaticResource Montserrat-Medium}"
+                                    ForegroundColor="{DynamicResource Gray-800}"
+                                    Position="0.5, 0.4"
+                                    Text="Bottom"
+                                    TextSize="16" />
+                                <gauge:Header
+                                    FontAttributes="Bold"
+                                    FontFamily="{StaticResource Montserrat-Medium}"
+                                    ForegroundColor="{DynamicResource Gray-800}"
+                                    Position="0.5, 0.65"
+                                    Text="{Binding BottomElementInfo}"
+                                    TextSize="16" />
+
+                            </gauge:SfCircularGauge.Headers>
+                            <gauge:SfCircularGauge.Scales>
+                                <gauge:Scale
+                                    EndValue="500"
+                                    Interval="50"
+                                    LabelOffset="0.65"
+                                    ShowRim="False"
+                                    StartValue="0">
+                                    <gauge:Scale.Pointers>
+                                        <gauge:NeedlePointer Type="Bar" Value="{Binding BottomTemperature}" />
+                                        <gauge:MarkerPointer
+                                            x:Name="bottomMarker"
+                                            EnableDragging="True"
+                                            MarkerHeight="20"
+                                            MarkerShape="InvertedTriangle"
+                                            MarkerWidth="20"
+                                            StepFrequency="1"
+                                            ValueChangeCompleted="MarkerPointer_BottomValueChangeCompleted"
+                                            ValueChanging="MarkerPointer_BottomValueChanging"
+                                            Offset="0.9"
+                                            Color="Black"
+                                            Value="{Binding BottomDesiredTemperature}" />
+                                    </gauge:Scale.Pointers>
+                                    <gauge:Scale.MajorTickSettings>
+                                        <gauge:TickSettings EndOffset="0.8" StartOffset="0.75" />
+                                    </gauge:Scale.MajorTickSettings>
+
+                                    <gauge:Scale.MinorTickSettings>
+                                        <gauge:TickSettings EndOffset="0.8" StartOffset="0.77" />
+                                    </gauge:Scale.MinorTickSettings>
+                                    <gauge:Scale.Ranges>
+                                        <gauge:Range
+                                            EndValue="500"
+                                            StartValue="0"
+                                            Thickness="15"
+                                            Offset="0.9">
+                                            <gauge:Range.GradientStops>
+                                                <gauge:GaugeGradientStop Color="#30B32D" Value="0" />
+                                                <gauge:GaugeGradientStop Color="#FFDD00" Value="50" />
+                                                <gauge:GaugeGradientStop Color="#FFDD00" Value="100" />
+                                                <gauge:GaugeGradientStop Color="#F03E3E" Value="500" />
+                                            </gauge:Range.GradientStops>
+                                        </gauge:Range>
+                                    </gauge:Scale.Ranges>
+                                </gauge:Scale>
+                            </gauge:SfCircularGauge.Scales>
+                        </gauge:SfCircularGauge>
+                        <Grid
+                            Grid.Row="1"
+                            Margin="0,-40,0,0"
+                            HeightRequest="70">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <buttons:SfButton
+                                Margin="10,16,-10,16"
+                                Command="{Binding BottomMinusPowerCommand}"
+                                CornerRadius="5"
+                                Text="-"
+                                WidthRequest="35" />
+                            <buttons:SfButton
+                                Grid.Column="2"
+                                Margin="-10,16,10,16"
+                                Command="{Binding BottomPlusPowerCommand}"
+                                CornerRadius="5"
+                                HeightRequest="10"
+                                Text="+"
+                                WidthRequest="35" />
+                            <gauge:SfLinearGauge Grid.Column="1">
+                                <gauge:SfLinearGauge.Scales>
+                                    <gauge:LinearScale
+                                        Interval="25"
+                                        LabelColor="Black"
+                                        MinorTicksPerInterval="1"
+                                        ScaleBarSize="12">
+                                        <gauge:LinearScale.MajorTickSettings>
+                                            <gauge:LinearTickSettings
+                                                Length="3"
+                                                Thickness="1"
+                                                Color="Black" />
+                                        </gauge:LinearScale.MajorTickSettings>
+                                        <gauge:LinearScale.MinorTickSettings>
+                                            <gauge:LinearTickSettings
+                                                Length="1"
+                                                Thickness="1"
+                                                Color="Black" />
+                                        </gauge:LinearScale.MinorTickSettings>
+                                        <gauge:LinearScale.GradientStops>
+                                            <gauge:GaugeGradientStop Color="#30B32D" Value="0" />
+                                            <gauge:GaugeGradientStop Color="#FFDD00" Value="25" />
+                                            <gauge:GaugeGradientStop Color="#FFDD00" Value="60" />
+                                            <gauge:GaugeGradientStop Color="Red" Value="100" />
+                                        </gauge:LinearScale.GradientStops>
+                                        <gauge:LinearScale.Pointers>
+                                            <gauge:BarPointer
+                                                CornerRadius="10"
+                                                CornerRadiusType="Start"
+                                                EnableAnimation="true"
+                                                Thickness="20"
+                                                Color="#36d1dc"
+                                                Value="{Binding BottomPower}" />
+                                            <gauge:SymbolPointer
+                                                Thickness="12"
+                                                Color="DeepSkyBlue"
+                                                Value="{Binding BottomMaxPower}" />
+                                        </gauge:LinearScale.Pointers>
+                                    </gauge:LinearScale>
+                                </gauge:SfLinearGauge.Scales>
+                            </gauge:SfLinearGauge>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Grid>
+        <Grid BackgroundColor="#CCCCCCCC" IsVisible="{Binding IsConnected, Converter={StaticResource InverseBoolConverter}}">
+            <xForms:SfBusyIndicator
+                x:Name="busyindicator"
+                Title="Connecting..."
+                AnimationType="Material" />
+        </Grid>
+    </Grid>
+</ContentPage>

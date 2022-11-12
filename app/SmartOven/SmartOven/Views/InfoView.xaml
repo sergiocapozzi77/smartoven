@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="SmartOvenV2.Views.InfoView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:busyIndicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
+    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:chart="clr-namespace:Syncfusion.SfChart.XForms;assembly=Syncfusion.SfChart.XForms"
+    xmlns:converters="clr-namespace:SmartOvenV2.Converters"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:gauge="clr-namespace:Syncfusion.SfGauge.XForms;assembly=Syncfusion.SfGauge.XForms"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:system="clr-namespace:System;assembly=netstandard"
+    xmlns:utility="clr-namespace:SmartOvenV2.Utilities;assembly=SmartOvenV2"
+    xmlns:vm="clr-namespace:SmartOvenV2.ViewModels"
+    Title="{Binding Title}"
+    utility:ViewModelLocator.AutoWireViewModel="True"
+    NavigationPage.HasNavigationBar="False"
+    mc:Ignorable="d">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ScrollView>
+        <Grid>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid>
+                    <Grid Padding="15">
+                        <gauge:SfCircularGauge>
+                            <gauge:SfCircularGauge.Headers>
+                                <gauge:Header
+                                    FontAttributes="Bold"
+                                    FontFamily="{StaticResource Montserrat-Medium}"
+                                    ForegroundColor="{DynamicResource Gray-800}"
+                                    Position="0.5, 0.4"
+                                    Text="Cpu Temperature"
+                                    TextSize="16" />
+                                <gauge:Header
+                                    FontAttributes="Bold"
+                                    FontFamily="{StaticResource Montserrat-Medium}"
+                                    ForegroundColor="{DynamicResource Gray-800}"
+                                    Position="0.5, 0.65"
+                                    Text="{Binding CpuElementInfo}"
+                                    TextSize="16" />
+                            </gauge:SfCircularGauge.Headers>
+                            <gauge:SfCircularGauge.Scales>
+                                <gauge:Scale
+                                    EndValue="85"
+                                    Interval="5"
+                                    LabelOffset="0.65"
+                                    ShowRim="False"
+                                    StartValue="0">
+                                    <gauge:Scale.Pointers>
+                                        <gauge:NeedlePointer Type="Bar" Value="{Binding CpuTemperature}" />
+                                    </gauge:Scale.Pointers>
+                                    <gauge:Scale.MajorTickSettings>
+                                        <gauge:TickSettings EndOffset="0.8" StartOffset="0.75" />
+                                    </gauge:Scale.MajorTickSettings>
+
+                                    <gauge:Scale.MinorTickSettings>
+                                        <gauge:TickSettings EndOffset="0.8" StartOffset="0.77" />
+                                    </gauge:Scale.MinorTickSettings>
+                                    <gauge:Scale.Ranges>
+                                        <gauge:Range
+                                            EndValue="85"
+                                            StartValue="0"
+                                            Thickness="15"
+                                            Offset="0.9">
+                                            <gauge:Range.GradientStops>
+                                                <gauge:GaugeGradientStop Color="#30B32D" Value="0" />
+                                                <gauge:GaugeGradientStop Color="#FFDD00" Value="25" />
+                                                <gauge:GaugeGradientStop Color="#FFDD00" Value="60" />
+                                                <gauge:GaugeGradientStop Color="Red" Value="85" />
+                                            </gauge:Range.GradientStops>
+                                        </gauge:Range>
+                                    </gauge:Scale.Ranges>
+                                </gauge:Scale>
+                            </gauge:SfCircularGauge.Scales>
+                        </gauge:SfCircularGauge>
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Row="2" Margin="15">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="60" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Text="Oven up time:" VerticalOptions="Center" />
+                    <StackLayout
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Orientation="Horizontal">
+                        <gauge:SfDigitalGauge
+                            Margin="14,0,0,0"
+                            CharacterHeight="50"
+                            CharacterStrokeColor="Blue"
+                            CharacterType="EightCrossEightDotMatrix"
+                            CharacterWidth="18"
+                            DisabledSegmentAlpha="30"
+                            DisabledSegmentColor="Gray"
+                            HorizontalOptions="Center"
+                            SegmentStrokeWidth="3"
+                            VerticalOptions="Center"
+                            Value="{Binding TimerValue}" />
+                        <buttons:SfButton
+                            Margin="0,7,0,7"
+                            Command="{Binding ResetCommand}"
+                            CornerRadius="5"
+                            Text="Reset" />
+
+                    </StackLayout>
+                    <Label
+                        Grid.Row="1"
+                        Text="Firmware version:"
+                        VerticalOptions="Center" />
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Text="{Binding Firmware}"
+                        VerticalOptions="Center" />
+                    <Label
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        IsVisible="{Binding NewFirmwareAvailable}"
+                        Text="{Binding NewFirmwareAvailableInfo}"
+                        VerticalOptions="Center" />
+                    <buttons:SfButton
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Command="{Binding UpdateCommand}"
+                        CornerRadius="5"
+                        HorizontalOptions="Start"
+                        IsEnabled="{Binding IsUpdating, Converter={StaticResource InverseBoolConverter}}"
+                        IsVisible="{Binding NewFirmwareAvailable}"
+                        Text="Update Firmware"
+                        VerticalOptions="Center"
+                        WidthRequest="140" />
+                    <Label
+                        Grid.Row="3"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        IsVisible="{Binding NewFirmwareAvailable}"
+                        Text="{Binding UpdateProgress}" />
+                </Grid>
+            </Grid>
+            <Grid BackgroundColor="#CCCCCCCC" IsVisible="{Binding IsConnected, Converter={StaticResource InverseBoolConverter}}">
+                <busyIndicator:SfBusyIndicator
+                    x:Name="busyindicator"
+                    Title="Connecting..."
+                    AnimationType="Material" />
+            </Grid>
+        </Grid>
+    </ScrollView>
+</ContentPage>
+

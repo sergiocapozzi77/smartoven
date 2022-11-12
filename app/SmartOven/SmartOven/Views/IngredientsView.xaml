@@ -1,0 +1,984 @@
+﻿<ContentPage
+    x:Class="SmartOvenV2.Views.IngredientsView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
+    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:controls="clr-namespace:SmartOvenV2.Controls;assembly=SmartOvenV2"
+    xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    xmlns:range="clr-namespace:Syncfusion.SfRangeSlider.XForms;assembly=Syncfusion.SfRangeSlider.XForms"
+    xmlns:tabView="clr-namespace:Syncfusion.XForms.TabView;assembly=Syncfusion.SfTabView.XForms"
+    xmlns:utility="clr-namespace:SmartOvenV2.Utilities;assembly=SmartOvenV2"
+    xmlns:xForms="clr-namespace:Syncfusion.SfNumericUpDown.XForms;assembly=Syncfusion.SfNumericUpDown.XForms"
+    utility:ViewModelLocator.AutoWireViewModel="True"
+    BackgroundColor="{DynamicResource Gray-White}"
+    NavigationPage.HasNavigationBar="False">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ScrollView VerticalOptions="FillAndExpand">
+
+            <StackLayout
+                Grid.Row="2"
+                BackgroundColor="{DynamicResource Gray-White}"
+                Spacing="0">
+
+                <Label
+                    Margin="15"
+                    FontFamily="{StaticResource Montserrat-Medium}"
+                    FontSize="16"
+                    HorizontalOptions="CenterAndExpand"
+                    LineHeight="{OnPlatform Android=1.5,
+                                            Default=-1}"
+                    Text="What type of pizza do you want to bake?"
+                    TextColor="{DynamicResource Gray-900}"
+                    VerticalOptions="Center"
+                    VerticalTextAlignment="Center" />
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <buttons:SfButton
+                        Margin="10,0,10,0"
+                        Padding="2"
+                        BackgroundColor="Transparent"
+                        BorderColor="{DynamicResource Gray-300}"
+                        BorderThickness="1"
+                        Command="{Binding SelectedPizzaTypeCommand}"
+                        CommandParameter="Tray"
+                        HeightRequest="190"
+                        HorizontalOptions="FillAndExpand"
+                        IsCheckable="True"
+                        IsChecked="{Binding IsTray}"
+                        VerticalOptions="Center">
+                        <buttons:SfButton.Content>
+                            <StackLayout Orientation="Vertical">
+                                <Label
+                                    Margin="0,2,0,0"
+                                    FontFamily="{StaticResource Montserrat-Medium}"
+                                    FontSize="16"
+                                    HorizontalOptions="CenterAndExpand"
+                                    Text="Tray"
+                                    TextColor="{DynamicResource Gray-800}"
+                                    VerticalTextAlignment="Center" />
+                                <Image HeightRequest="80" Source="PizzaTeglia.jpg" />
+                                <Label
+                                    Margin="0,2,0,0"
+                                    FontFamily="{StaticResource Montserrat-Regular}"
+                                    FontSize="12"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    Text="The roman tray pizza: thick, soft and crunchy. Perfect choice for home ovens"
+                                    TextColor="{DynamicResource Gray-600}"
+                                    VerticalTextAlignment="Center" />
+                            </StackLayout>
+                        </buttons:SfButton.Content>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Checked">
+                                    <VisualState.Setters>
+                                        <Setter Property="BorderColor" Value="{DynamicResource Gray-800}" />
+                                        <Setter Property="BorderThickness" Value="2" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Unchecked">
+                                    <VisualState.Setters>
+                                        <Setter Property="BorderColor" Value="{DynamicResource Gray-300}" />
+                                        <Setter Property="BorderThickness" Value="1" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </buttons:SfButton>
+                    <buttons:SfButton
+                        Grid.Column="1"
+                        Margin="10,0,10,0"
+                        Padding="2"
+                        BackgroundColor="Transparent"
+                        BorderColor="{DynamicResource Gray-300}"
+                        BorderThickness="1"
+                        Command="{Binding SelectedPizzaTypeCommand}"
+                        CommandParameter="DoughBalls"
+                        HeightRequest="190"
+                        HorizontalOptions="FillAndExpand"
+                        IsCheckable="True"
+                        IsChecked="{Binding IsDoughballs}"
+                        VerticalOptions="Center">
+                        <buttons:SfButton.Content>
+                            <StackLayout Orientation="Vertical">
+                                <Label
+                                    Margin="0,2,0,0"
+                                    FontFamily="{StaticResource Montserrat-Medium}"
+                                    FontSize="16"
+                                    HorizontalOptions="CenterAndExpand"
+                                    Text="Round"
+                                    TextColor="{DynamicResource Gray-800}"
+                                    VerticalTextAlignment="Center" />
+                                <Image HeightRequest="80" Source="PizzaRound.jpg" />
+                                <Label
+                                    Margin="0,0,0,0"
+                                    FontFamily="{StaticResource Montserrat-Regular}"
+                                    FontSize="12"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    Text="The classic neapolitan round pizza, with a big crust and thin and soft in the middle"
+                                    TextColor="{DynamicResource Gray-600}"
+                                    VerticalTextAlignment="Center" />
+                            </StackLayout>
+                        </buttons:SfButton.Content>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Checked">
+                                    <VisualState.Setters>
+                                        <Setter Property="BorderColor" Value="{DynamicResource Gray-800}" />
+                                        <Setter Property="BorderThickness" Value="2" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Unchecked">
+                                    <VisualState.Setters>
+                                        <Setter Property="BorderColor" Value="{DynamicResource Gray-300}" />
+                                        <Setter Property="BorderThickness" Value="1" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </buttons:SfButton>
+
+                </Grid>
+
+                <Grid Margin="5,0,5,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <inputLayout:SfTextInputLayout
+                        Grid.Column="0"
+                        ContainerType="Outlined"
+                        Hint="Dough Balls"
+                        OutlineCornerRadius="8"
+                        VerticalOptions="Center">
+                        <xForms:SfNumericUpDown
+                            MaximumDecimalDigits="0"
+                            SpinButtonAlignment="Both"
+                            StepValue="1"
+                            TextAlignment="Center"
+                            Value="{Binding DoughBalls}" />
+                        <inputLayout:SfTextInputLayout.HintLabelStyle>
+                            <inputLayout:LabelStyle FontSize="13" />
+                        </inputLayout:SfTextInputLayout.HintLabelStyle>
+                    </inputLayout:SfTextInputLayout>
+                    <inputLayout:SfTextInputLayout
+                        Grid.Column="1"
+                        ContainerType="Outlined"
+                        Hint="Ball Weight"
+                        OutlineCornerRadius="8"
+                        VerticalOptions="Center">
+                        <xForms:SfNumericUpDown
+                            MaximumDecimalDigits="0"
+                            SpinButtonAlignment="Both"
+                            StepValue="5"
+                            TextAlignment="Center"
+                            Value="{Binding BallWeight}" />
+                        <inputLayout:SfTextInputLayout.HintLabelStyle>
+                            <inputLayout:LabelStyle FontSize="13" />
+                        </inputLayout:SfTextInputLayout.HintLabelStyle>
+                    </inputLayout:SfTextInputLayout>
+
+                </Grid>
+
+                <Grid Margin="5,0,5,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <inputLayout:SfTextInputLayout
+                        ContainerType="Outlined"
+                        Hint="Water %"
+                        OutlineCornerRadius="8">
+                        <xForms:SfNumericUpDown
+                            FormatString="p"
+                            MaximumDecimalDigits="0"
+                            PercentDisplayMode="Value"
+                            SpinButtonAlignment="Both"
+                            StepValue="1"
+                            TextAlignment="Center"
+                            Value="{Binding WaterPerc}" />
+                        <inputLayout:SfTextInputLayout.HintLabelStyle>
+                            <inputLayout:LabelStyle FontSize="13" />
+                        </inputLayout:SfTextInputLayout.HintLabelStyle>
+                    </inputLayout:SfTextInputLayout>
+                    <inputLayout:SfTextInputLayout
+                        Grid.Column="1"
+                        ContainerType="Outlined"
+                        Hint="Salt"
+                        OutlineCornerRadius="8">
+                        <xForms:SfNumericUpDown
+                            FormatString="p"
+                            MaximumDecimalDigits="1"
+                            PercentDisplayMode="Value"
+                            SpinButtonAlignment="Both"
+                            StepValue="0.1"
+                            TextAlignment="Center"
+                            Value="{Binding SaltPerc}" />
+                        <inputLayout:SfTextInputLayout.HintLabelStyle>
+                            <inputLayout:LabelStyle FontSize="13" />
+                        </inputLayout:SfTextInputLayout.HintLabelStyle>
+                    </inputLayout:SfTextInputLayout>
+                </Grid>
+
+
+                <Grid Margin="5,0,5,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <inputLayout:SfTextInputLayout
+                        ContainerType="Outlined"
+                        Hint="Total leavening time (hrs)"
+                        OutlineCornerRadius="8">
+                        <xForms:SfNumericUpDown
+                            MaximumDecimalDigits="0"
+                            SpinButtonAlignment="Both"
+                            StepValue="1"
+                            TextAlignment="Center"
+                            Value="{Binding TotalLeavening}" />
+                        <inputLayout:SfTextInputLayout.HintLabelStyle>
+                            <inputLayout:LabelStyle FontSize="13" />
+                        </inputLayout:SfTextInputLayout.HintLabelStyle>
+                    </inputLayout:SfTextInputLayout>
+                    <inputLayout:SfTextInputLayout
+                        Grid.Column="1"
+                        ContainerType="Outlined"
+                        Hint="Fridge livening time"
+                        OutlineCornerRadius="8">
+                        <xForms:SfNumericUpDown
+                            MaximumDecimalDigits="0"
+                            SpinButtonAlignment="Both"
+                            StepValue="1"
+                            TextAlignment="Center"
+                            Value="{Binding FridgeLeavening}" />
+                        <inputLayout:SfTextInputLayout.HintLabelStyle>
+                            <inputLayout:LabelStyle FontSize="13" />
+                        </inputLayout:SfTextInputLayout.HintLabelStyle>
+                    </inputLayout:SfTextInputLayout>
+                </Grid>
+
+                <Grid Margin="5,0,5,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <inputLayout:SfTextInputLayout
+                        ContainerType="Outlined"
+                        Hint="Room temperature (°C)"
+                        OutlineCornerRadius="8">
+                        <xForms:SfNumericUpDown
+                            MaximumDecimalDigits="0"
+                            SpinButtonAlignment="Both"
+                            StepValue="1"
+                            TextAlignment="Center"
+                            Value="{Binding RoomTemperature}" />
+                        <inputLayout:SfTextInputLayout.HintLabelStyle>
+                            <inputLayout:LabelStyle FontSize="13" />
+                        </inputLayout:SfTextInputLayout.HintLabelStyle>
+                    </inputLayout:SfTextInputLayout>
+                    <inputLayout:SfTextInputLayout
+                        Grid.Column="1"
+                        ContainerType="Outlined"
+                        Hint="Fat"
+                        IsVisible="{Binding OilNeeded}"
+                        OutlineCornerRadius="8">
+                        <xForms:SfNumericUpDown
+                            FormatString="p"
+                            MaximumDecimalDigits="1"
+                            PercentDisplayMode="Value"
+                            SpinButtonAlignment="Both"
+                            StepValue="0.1"
+                            TextAlignment="Center"
+                            Value="{Binding FatPerc}" />
+                        <inputLayout:SfTextInputLayout.HintLabelStyle>
+                            <inputLayout:LabelStyle FontSize="13" />
+                        </inputLayout:SfTextInputLayout.HintLabelStyle>
+                    </inputLayout:SfTextInputLayout>
+                </Grid>
+
+                <Label
+                    Margin="15"
+                    FontFamily="{StaticResource Montserrat-Medium}"
+                    FontSize="16"
+                    HorizontalOptions="CenterAndExpand"
+                    LineHeight="{OnPlatform Android=1.5,
+                                            Default=-1}"
+                    Text="What yeast are you using?"
+                    TextColor="{DynamicResource Gray-900}"
+                    VerticalOptions="Center"
+                    VerticalTextAlignment="Center" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <buttons:SfButton
+                        Margin="10,0,10,0"
+                        Padding="2"
+                        BackgroundColor="Transparent"
+                        BorderColor="{DynamicResource Gray-300}"
+                        BorderThickness="1"
+                        Command="{Binding SelectedYeastCommand}"
+                        CommandParameter="Dried"
+                        HeightRequest="120"
+                        HorizontalOptions="FillAndExpand"
+                        IsCheckable="True"
+                        IsChecked="{Binding IsDriedYeast}"
+                        VerticalOptions="Center">
+                        <buttons:SfButton.Content>
+                            <StackLayout Orientation="Vertical">
+                                <Label
+                                    Margin="0,2,0,0"
+                                    FontFamily="{StaticResource Montserrat-Medium}"
+                                    FontSize="15"
+                                    HorizontalOptions="CenterAndExpand"
+                                    Text="Dried"
+                                    TextColor="{DynamicResource Gray-800}"
+                                    VerticalTextAlignment="Center" />
+                                <Image HeightRequest="80" Source="yeast_dried.jpg" />
+                            </StackLayout>
+                        </buttons:SfButton.Content>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Checked">
+                                    <VisualState.Setters>
+                                        <Setter Property="BorderColor" Value="{DynamicResource Gray-800}" />
+                                        <Setter Property="BorderThickness" Value="2" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Unchecked">
+                                    <VisualState.Setters>
+                                        <Setter Property="BorderColor" Value="{DynamicResource Gray-300}" />
+                                        <Setter Property="BorderThickness" Value="1" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </buttons:SfButton>
+                    <buttons:SfButton
+                        Grid.Column="1"
+                        Margin="10,0,10,0"
+                        Padding="2"
+                        BackgroundColor="Transparent"
+                        BorderColor="{DynamicResource Gray-300}"
+                        BorderThickness="1"
+                        Command="{Binding SelectedYeastCommand}"
+                        CommandParameter="Fresh"
+                        HeightRequest="120"
+                        HorizontalOptions="FillAndExpand"
+                        IsCheckable="True"
+                        IsChecked="{Binding IsFreshYeast}"
+                        VerticalOptions="Center">
+                        <buttons:SfButton.Content>
+                            <StackLayout Orientation="Vertical">
+                                <Label
+                                    Margin="0,2,0,0"
+                                    FontFamily="{StaticResource Montserrat-Medium}"
+                                    FontSize="15"
+                                    HorizontalOptions="CenterAndExpand"
+                                    Text="Fresh"
+                                    TextColor="{DynamicResource Gray-800}"
+                                    VerticalTextAlignment="Center" />
+                                <Image HeightRequest="80" Source="yeast_fresh.jpg" />
+                            </StackLayout>
+                        </buttons:SfButton.Content>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Checked">
+                                    <VisualState.Setters>
+                                        <Setter Property="BorderColor" Value="{DynamicResource Gray-800}" />
+                                        <Setter Property="BorderThickness" Value="2" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Unchecked">
+                                    <VisualState.Setters>
+                                        <Setter Property="BorderColor" Value="{DynamicResource Gray-300}" />
+                                        <Setter Property="BorderThickness" Value="1" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </buttons:SfButton>
+                    <buttons:SfButton
+                        Grid.Column="2"
+                        Margin="10,0,10,0"
+                        Padding="2"
+                        BackgroundColor="Transparent"
+                        BorderColor="{DynamicResource Gray-300}"
+                        BorderThickness="1"
+                        Command="{Binding SelectedYeastCommand}"
+                        CommandParameter="Sourdough"
+                        HeightRequest="120"
+                        HorizontalOptions="FillAndExpand"
+                        IsCheckable="True"
+                        IsChecked="{Binding IsSourdoughYeast}"
+                        VerticalOptions="Center">
+                        <buttons:SfButton.Content>
+                            <StackLayout Orientation="Vertical">
+                                <Label
+                                    Margin="0,2,0,0"
+                                    FontFamily="{StaticResource Montserrat-Medium}"
+                                    FontSize="15"
+                                    HorizontalOptions="CenterAndExpand"
+                                    Text="Sourdough"
+                                    TextColor="{DynamicResource Gray-800}"
+                                    VerticalTextAlignment="Center" />
+                                <Image HeightRequest="80" Source="yeast_sourdough.jpg" />
+                            </StackLayout>
+                        </buttons:SfButton.Content>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Checked">
+                                    <VisualState.Setters>
+                                        <Setter Property="BorderColor" Value="{DynamicResource Gray-800}" />
+                                        <Setter Property="BorderThickness" Value="2" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Unchecked">
+                                    <VisualState.Setters>
+                                        <Setter Property="BorderColor" Value="{DynamicResource Gray-300}" />
+                                        <Setter Property="BorderThickness" Value="1" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </buttons:SfButton>
+                </Grid>
+
+                <BoxView
+                    Margin="0,10,0,10"
+                    HeightRequest="1"
+                    Style="{StaticResource BoxViewStyle}" />
+
+                <border:SfBorder
+                    Margin="10,20,10,10"
+                    BorderColor="{DynamicResource Gray-200}"
+                    HeightRequest="1"
+                    HorizontalOptions="Fill" />
+                <tabView:SfTabView>
+                    <tabView:SfTabItem Title="Direct">
+                        <tabView:SfTabItem.Content>
+                            <StackLayout Orientation="Vertical">
+                                <Label
+                                    FontFamily="{StaticResource Montserrat-Bold}"
+                                    FontSize="16"
+                                    HeightRequest="45"
+                                    HorizontalOptions="CenterAndExpand"
+                                    LineHeight="{OnPlatform Android=1.5,
+                                                            Default=-1}"
+                                    Text="Ingredients"
+                                    TextColor="{DynamicResource Gray-900}"
+                                    VerticalOptions="Center"
+                                    VerticalTextAlignment="Center" />
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <StackLayout
+                                        HorizontalOptions="Center"
+                                        Orientation="Horizontal"
+                                        VerticalOptions="Center">
+                                        <Label
+                                            FontFamily="{StaticResource Montserrat-Medium}"
+                                            FontSize="16"
+                                            HeightRequest="45"
+                                            HorizontalOptions="Center"
+                                            LineHeight="{OnPlatform Android=1.5,
+                                                                    Default=-1}"
+                                            Text="Flour:"
+                                            TextColor="{DynamicResource Gray-900}"
+                                            VerticalOptions="Center"
+                                            VerticalTextAlignment="Center" />
+                                        <controls:TipImage
+                                            Margin="0,13,0,0"
+                                            HorizontalOptions="Start"
+                                            HorizontalTextAlignment="Start"
+                                            TipText="{Binding FlourTip}"
+                                            VerticalOptions="Center" />
+                                    </StackLayout>
+                                    <Label
+                                        Grid.Column="1"
+                                        FontFamily="{StaticResource Montserrat-Medium}"
+                                        FontSize="16"
+                                        HorizontalOptions="CenterAndExpand"
+                                        LineHeight="{OnPlatform Android=1.5,
+                                                                Default=-1}"
+                                        Text="{Binding Flour, StringFormat='{0:F0} gr'}"
+                                        TextColor="{DynamicResource Gray-900}"
+                                        VerticalOptions="Center"
+                                        VerticalTextAlignment="Center" />
+                                </Grid>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <StackLayout
+                                        HorizontalOptions="Center"
+                                        Orientation="Horizontal"
+                                        VerticalOptions="Center">
+                                        <Label
+                                            FontFamily="{StaticResource Montserrat-Medium}"
+                                            FontSize="16"
+                                            HeightRequest="45"
+                                            HorizontalOptions="Center"
+                                            LineHeight="{OnPlatform Android=1.5,
+                                                                    Default=-1}"
+                                            Text="Water:"
+                                            TextColor="{DynamicResource Gray-900}"
+                                            VerticalOptions="Center"
+                                            VerticalTextAlignment="Center" />
+                                        <controls:TipImage
+                                            Margin="0,13,0,0"
+                                            HorizontalOptions="Start"
+                                            HorizontalTextAlignment="Start"
+                                            TipText="{Binding WaterTip}"
+                                            VerticalOptions="Center" />
+                                    </StackLayout>
+                                    <Label
+                                        Grid.Column="1"
+                                        FontFamily="{StaticResource Montserrat-Medium}"
+                                        FontSize="16"
+                                        HorizontalOptions="CenterAndExpand"
+                                        LineHeight="{OnPlatform Android=1.5,
+                                                                Default=-1}"
+                                        Text="{Binding Water, StringFormat='{0:F0} gr'}"
+                                        TextColor="{DynamicResource Gray-900}"
+                                        VerticalOptions="Center"
+                                        VerticalTextAlignment="Center" />
+                                </Grid>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Label
+                                        FontFamily="{StaticResource Montserrat-Medium}"
+                                        FontSize="16"
+                                        HeightRequest="45"
+                                        HorizontalOptions="CenterAndExpand"
+                                        LineHeight="{OnPlatform Android=1.5,
+                                                                Default=-1}"
+                                        Text="Yeast:"
+                                        TextColor="{DynamicResource Gray-900}"
+                                        VerticalOptions="Center"
+                                        VerticalTextAlignment="Center" />
+                                    <Label
+                                        Grid.Column="1"
+                                        FontFamily="{StaticResource Montserrat-Medium}"
+                                        FontSize="16"
+                                        HorizontalOptions="CenterAndExpand"
+                                        LineHeight="{OnPlatform Android=1.5,
+                                                                Default=-1}"
+                                        Text="{Binding Yeast, StringFormat='{0:F2} gr'}"
+                                        TextColor="{DynamicResource Gray-900}"
+                                        VerticalOptions="Center"
+                                        VerticalTextAlignment="Center" />
+                                </Grid>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Label
+                                        FontFamily="{StaticResource Montserrat-Medium}"
+                                        FontSize="16"
+                                        HeightRequest="45"
+                                        HorizontalOptions="CenterAndExpand"
+                                        LineHeight="{OnPlatform Android=1.5,
+                                                                Default=-1}"
+                                        Text="Salt:"
+                                        TextColor="{DynamicResource Gray-900}"
+                                        VerticalOptions="Center"
+                                        VerticalTextAlignment="Center" />
+                                    <Label
+                                        Grid.Column="1"
+                                        FontFamily="{StaticResource Montserrat-Medium}"
+                                        FontSize="16"
+                                        HorizontalOptions="CenterAndExpand"
+                                        LineHeight="{OnPlatform Android=1.5,
+                                                                Default=-1}"
+                                        Text="{Binding Salt, StringFormat='{0:F0} gr'}"
+                                        TextColor="{DynamicResource Gray-900}"
+                                        VerticalOptions="Center"
+                                        VerticalTextAlignment="Center" />
+                                </Grid>
+                                <Grid IsVisible="{Binding OilNeeded}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Label
+                                        FontFamily="{StaticResource Montserrat-Medium}"
+                                        FontSize="16"
+                                        HeightRequest="45"
+                                        HorizontalOptions="CenterAndExpand"
+                                        LineHeight="{OnPlatform Android=1.5,
+                                                                Default=-1}"
+                                        Text="Fat:"
+                                        TextColor="{DynamicResource Gray-900}"
+                                        VerticalOptions="Center"
+                                        VerticalTextAlignment="Center" />
+                                    <Label
+                                        Grid.Column="1"
+                                        FontFamily="{StaticResource Montserrat-Medium}"
+                                        FontSize="16"
+                                        HorizontalOptions="CenterAndExpand"
+                                        LineHeight="{OnPlatform Android=1.5,
+                                                                Default=-1}"
+                                        Text="{Binding Fat, StringFormat='{0} gr'}"
+                                        TextColor="{DynamicResource Gray-900}"
+                                        VerticalOptions="Center"
+                                        VerticalTextAlignment="Center" />
+                                </Grid>
+                            </StackLayout>
+                        </tabView:SfTabItem.Content>
+                    </tabView:SfTabItem>
+                    <tabView:SfTabItem Title="Biga">
+                        <tabView:SfTabItem.Content>
+                            <StackLayout Orientation="Vertical">
+                                <Label
+                                    FontFamily="{StaticResource Montserrat-Bold}"
+                                    FontSize="16"
+                                    HeightRequest="45"
+                                    HorizontalOptions="CenterAndExpand"
+                                    LineHeight="{OnPlatform Android=1.5,
+                                                            Default=-1}"
+                                    Text="For Biga"
+                                    TextColor="{DynamicResource Gray-900}"
+                                    VerticalOptions="Center"
+                                    VerticalTextAlignment="Center" />
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Label
+                                        FontFamily="{StaticResource Montserrat-Medium}"
+                                        FontSize="12"
+                                        HeightRequest="45"
+                                        HorizontalOptions="Center"
+                                        LineHeight="{OnPlatform Android=1.5,
+                                                                Default=-1}"
+                                        Text="Percentage of water in Biga:"
+                                        TextColor="{DynamicResource Gray-900}"
+                                        VerticalOptions="Center"
+                                        VerticalTextAlignment="Center" />
+                                    <range:SfRangeSlider
+                                        Grid.Column="1"
+                                        Maximum="70"
+                                        Minimum="40"
+                                        RangeStart="40"
+                                        ShowRange="false"
+                                        ShowValueLabel="true"
+                                        StepFrequency="1"
+                                        Value="{Binding BigaWaterPercentage}" />
+                                </Grid>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Label
+                                        FontFamily="{StaticResource Montserrat-Medium}"
+                                        FontSize="12"
+                                        HeightRequest="45"
+                                        HorizontalOptions="Center"
+                                        LineHeight="{OnPlatform Android=1.5,
+                                                                Default=-1}"
+                                        Text="Percentage of Biga in the final dough:"
+                                        TextColor="{DynamicResource Gray-900}"
+                                        VerticalOptions="Center"
+                                        VerticalTextAlignment="Center" />
+                                    <range:SfRangeSlider
+                                        Grid.Column="1"
+                                        Maximum="100"
+                                        Minimum="50"
+                                        RangeStart="50"
+                                        ShowRange="false"
+                                        ShowValueLabel="true"
+                                        StepFrequency="1"
+                                        Value="{Binding BigaPercentage}" />
+                                </Grid>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <StackLayout
+                                        HorizontalOptions="Center"
+                                        Orientation="Horizontal"
+                                        VerticalOptions="Center">
+                                        <Label
+                                            FontFamily="{StaticResource Montserrat-Medium}"
+                                            FontSize="16"
+                                            HeightRequest="45"
+                                            HorizontalOptions="Center"
+                                            LineHeight="{OnPlatform Android=1.5,
+                                                                    Default=-1}"
+                                            Text="Flour:"
+                                            TextColor="{DynamicResource Gray-900}"
+                                            VerticalOptions="Center"
+                                            VerticalTextAlignment="Center" />
+                                        <controls:TipImage
+                                            Margin="0,13,0,0"
+                                            HorizontalOptions="Start"
+                                            HorizontalTextAlignment="Start"
+                                            TipText="{Binding FlourTip}"
+                                            VerticalOptions="Center" />
+                                    </StackLayout>
+                                    <Label
+                                        Grid.Column="1"
+                                        FontFamily="{StaticResource Montserrat-Medium}"
+                                        FontSize="16"
+                                        HorizontalOptions="CenterAndExpand"
+                                        LineHeight="{OnPlatform Android=1.5,
+                                                                Default=-1}"
+                                        Text="{Binding FlourBiga, StringFormat='{0:F0} gr'}"
+                                        TextColor="{DynamicResource Gray-900}"
+                                        VerticalOptions="Center"
+                                        VerticalTextAlignment="Center" />
+                                </Grid>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <StackLayout
+                                        HorizontalOptions="Center"
+                                        Orientation="Horizontal"
+                                        VerticalOptions="Center">
+                                        <Label
+                                            FontFamily="{StaticResource Montserrat-Medium}"
+                                            FontSize="16"
+                                            HeightRequest="45"
+                                            HorizontalOptions="Center"
+                                            LineHeight="{OnPlatform Android=1.5,
+                                                                    Default=-1}"
+                                            Text="Water:"
+                                            TextColor="{DynamicResource Gray-900}"
+                                            VerticalOptions="Center"
+                                            VerticalTextAlignment="Center" />
+                                        <controls:TipImage
+                                            Margin="0,13,0,0"
+                                            HorizontalOptions="Start"
+                                            HorizontalTextAlignment="Start"
+                                            TipText="{Binding WaterTip}"
+                                            VerticalOptions="Center" />
+                                    </StackLayout>
+                                    <Label
+                                        Grid.Column="1"
+                                        FontFamily="{StaticResource Montserrat-Medium}"
+                                        FontSize="16"
+                                        HorizontalOptions="CenterAndExpand"
+                                        LineHeight="{OnPlatform Android=1.5,
+                                                                Default=-1}"
+                                        Text="{Binding WaterBiga1, StringFormat='{0:F0} gr'}"
+                                        TextColor="{DynamicResource Gray-900}"
+                                        VerticalOptions="Center"
+                                        VerticalTextAlignment="Center" />
+                                </Grid>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Label
+                                        FontFamily="{StaticResource Montserrat-Medium}"
+                                        FontSize="16"
+                                        HeightRequest="45"
+                                        HorizontalOptions="CenterAndExpand"
+                                        LineHeight="{OnPlatform Android=1.5,
+                                                                Default=-1}"
+                                        Text="Yeast:"
+                                        TextColor="{DynamicResource Gray-900}"
+                                        VerticalOptions="Center"
+                                        VerticalTextAlignment="Center" />
+                                    <Label
+                                        Grid.Column="1"
+                                        FontFamily="{StaticResource Montserrat-Medium}"
+                                        FontSize="16"
+                                        HorizontalOptions="CenterAndExpand"
+                                        LineHeight="{OnPlatform Android=1.5,
+                                                                Default=-1}"
+                                        Text="{Binding YeastBiga, StringFormat='{0:F2} gr'}"
+                                        TextColor="{DynamicResource Gray-900}"
+                                        VerticalOptions="Center"
+                                        VerticalTextAlignment="Center" />
+                                </Grid>
+                                <Label
+                                    FontFamily="{StaticResource Montserrat-Bold}"
+                                    FontSize="16"
+                                    HeightRequest="45"
+                                    HorizontalOptions="CenterAndExpand"
+                                    LineHeight="{OnPlatform Android=1.5,
+                                                            Default=-1}"
+                                    Text="For the Dough"
+                                    TextColor="{DynamicResource Gray-900}"
+                                    VerticalOptions="Center"
+                                    VerticalTextAlignment="Center" />
+                                <Grid IsVisible="{Binding NeedFlourBigaDough}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Label
+                                        FontFamily="{StaticResource Montserrat-Medium}"
+                                        FontSize="16"
+                                        HeightRequest="45"
+                                        HorizontalOptions="Center"
+                                        LineHeight="{OnPlatform Android=1.5,
+                                                                Default=-1}"
+                                        Text="Flour:"
+                                        TextColor="{DynamicResource Gray-900}"
+                                        VerticalOptions="Center"
+                                        VerticalTextAlignment="Center" />
+                                    <Label
+                                        Grid.Column="1"
+                                        FontFamily="{StaticResource Montserrat-Medium}"
+                                        FontSize="16"
+                                        HorizontalOptions="CenterAndExpand"
+                                        LineHeight="{OnPlatform Android=1.5,
+                                                                Default=-1}"
+                                        Text="{Binding FlourBigaDough, StringFormat='{0:F0} gr'}"
+                                        TextColor="{DynamicResource Gray-900}"
+                                        VerticalOptions="Center"
+                                        VerticalTextAlignment="Center" />
+                                </Grid>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <StackLayout
+                                        HorizontalOptions="Center"
+                                        Orientation="Horizontal"
+                                        VerticalOptions="Center">
+                                        <Label
+                                            FontFamily="{StaticResource Montserrat-Medium}"
+                                            FontSize="16"
+                                            HeightRequest="45"
+                                            HorizontalOptions="Center"
+                                            LineHeight="{OnPlatform Android=1.5,
+                                                                    Default=-1}"
+                                            Text="Water:"
+                                            TextColor="{DynamicResource Gray-900}"
+                                            VerticalOptions="Center"
+                                            VerticalTextAlignment="Center" />
+                                    </StackLayout>
+                                    <Label
+                                        Grid.Column="1"
+                                        FontFamily="{StaticResource Montserrat-Medium}"
+                                        FontSize="16"
+                                        HorizontalOptions="CenterAndExpand"
+                                        LineHeight="{OnPlatform Android=1.5,
+                                                                Default=-1}"
+                                        Text="{Binding WaterBiga2, StringFormat='{0:F0} gr'}"
+                                        TextColor="{DynamicResource Gray-900}"
+                                        VerticalOptions="Center"
+                                        VerticalTextAlignment="Center" />
+                                </Grid>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Label
+                                        FontFamily="{StaticResource Montserrat-Medium}"
+                                        FontSize="16"
+                                        HeightRequest="45"
+                                        HorizontalOptions="CenterAndExpand"
+                                        LineHeight="{OnPlatform Android=1.5,
+                                                                Default=-1}"
+                                        Text="Salt:"
+                                        TextColor="{DynamicResource Gray-900}"
+                                        VerticalOptions="Center"
+                                        VerticalTextAlignment="Center" />
+                                    <Label
+                                        Grid.Column="1"
+                                        FontFamily="{StaticResource Montserrat-Medium}"
+                                        FontSize="16"
+                                        HorizontalOptions="CenterAndExpand"
+                                        LineHeight="{OnPlatform Android=1.5,
+                                                                Default=-1}"
+                                        Text="{Binding SaltBiga, StringFormat='{0:F0} gr'}"
+                                        TextColor="{DynamicResource Gray-900}"
+                                        VerticalOptions="Center"
+                                        VerticalTextAlignment="Center" />
+                                </Grid>
+                                <Grid IsVisible="{Binding OilNeeded}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Label
+                                        FontFamily="{StaticResource Montserrat-Medium}"
+                                        FontSize="16"
+                                        HeightRequest="45"
+                                        HorizontalOptions="CenterAndExpand"
+                                        LineHeight="{OnPlatform Android=1.5,
+                                                                Default=-1}"
+                                        Text="Vegetable Oil:"
+                                        TextColor="{DynamicResource Gray-900}"
+                                        VerticalOptions="Center"
+                                        VerticalTextAlignment="Center" />
+                                    <Label
+                                        Grid.Column="1"
+                                        FontFamily="{StaticResource Montserrat-Medium}"
+                                        FontSize="16"
+                                        HorizontalOptions="CenterAndExpand"
+                                        LineHeight="{OnPlatform Android=1.5,
+                                                                Default=-1}"
+                                        Text="{Binding OilBiga, StringFormat='{0} gr'}"
+                                        TextColor="{DynamicResource Gray-900}"
+                                        VerticalOptions="Center"
+                                        VerticalTextAlignment="Center" />
+                                </Grid>
+                            </StackLayout>
+                        </tabView:SfTabItem.Content>
+                    </tabView:SfTabItem>
+                    <tabView:SfTabItem Title="Poolish">
+                        <tabView:SfTabItem.Content />
+                    </tabView:SfTabItem>
+                </tabView:SfTabView>
+
+                <buttons:SfButton
+                    Margin="{OnIdiom Default=0,
+                                     Phone='10,0,10,10'}"
+                    BackgroundColor="{DynamicResource PrimaryColor}"
+                    BorderColor="{DynamicResource PrimaryColor}"
+                    BorderWidth="1"
+                    Command="{Binding NextStepCommand}"
+                    FontFamily="{StaticResource Montserrat-SemiBold}"
+                    FontSize="18"
+                    HeightRequest="44"
+                    HorizontalOptions="{OnIdiom Default=Center,
+                                                Phone=FillAndExpand}"
+                    Style="{StaticResource RoundButtonStyle}"
+                    Text="SAVE RECIPE"
+                    TextColor="{DynamicResource Gray-White}"
+                    WidthRequest="{OnIdiom Default=200,
+                                           Phone=-1}" />
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

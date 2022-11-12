@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage
+    x:Class="SmartOvenV2.Views.MainPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:views="clr-namespace:SmartOvenV2.Views"
+    android:TabbedPage.IsSwipePagingEnabled="False"
+    android:TabbedPage.ToolbarPlacement="Bottom"
+    mc:Ignorable="d">
+
+    <TabbedPage.Children>
+        <NavigationPage Title="Oven">
+            <NavigationPage.IconImageSource>
+                <FileImageSource File="Element_small.png" />
+            </NavigationPage.IconImageSource>
+            <x:Arguments>
+                <views:OvenView />
+            </x:Arguments>
+        </NavigationPage>
+
+        <NavigationPage Title="Recipe">
+            <NavigationPage.IconImageSource>
+                <FileImageSource File="timer.png" />
+            </NavigationPage.IconImageSource>
+            <x:Arguments>
+                <views:RecipeView />
+            </x:Arguments>
+        </NavigationPage>
+
+        <NavigationPage Title="Ingredients">
+            <NavigationPage.Icon>
+                <FileImageSource File="tab_ingredients.png" />
+            </NavigationPage.Icon>
+            <x:Arguments>
+                <views:IngredientsView />
+            </x:Arguments>
+        </NavigationPage>
+
+        <NavigationPage Title="Info">
+            <NavigationPage.Icon>
+                <FileImageSource File="tab_about.png" />
+            </NavigationPage.Icon>
+            <x:Arguments>
+                <views:InfoView />
+            </x:Arguments>
+        </NavigationPage>
+    </TabbedPage.Children>
+
+</TabbedPage>
