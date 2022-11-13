@@ -10,6 +10,7 @@ The project has 2 modules:
   <img src="./img/oven.jpg" alt="Oven" width="400">
   <img src="./img/oven_open.jpg" alt="Oven" width="400">
   <img src="./img/pizza.jpg" alt="Oven" width="400">
+  <img src="./img/app.jpg" alt="App" width="400">
 </p>
 
 # How SmartOven works
