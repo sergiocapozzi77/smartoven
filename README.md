@@ -38,7 +38,8 @@ The app communicate using Bluetooth Low Energy with the ESP32, is using a very s
 # The Oven: the Firmware
 
 The firmware for the ESP32 is written using the arduino libraries. You will find the firmware in the firmware/ subfolder of this repository. In order to compile you need to open the project using a Visual Studio Code with the Platform IO extension installed.
-The ESP32 module communicate with two sensors to get the current top and bottom temperature and two dimmers to switch the elements on and off (with also the possibility to partialize the power from 0% to 100% in order to have a more smooth cooking)
+The ESP32 module communicate with two sensors to get the current top and bottom temperature and two dimmers to switch the elements on and off (with also the possibility to partialize the power from 0% to 100% in order to have a more smooth cooking).
+In the firmware/ subfolder you will also find a docx file with the modules used in the electronic and an high level schema of the circuit.
 
 <p align="center">
   <img src="./img/esp32.jpg" alt="Esp32" width="400">
@@ -53,6 +54,6 @@ The oven has an internal chamber made of stainless steel, inside this chamber th
   <img src="./img/oven_open.jpg" alt="Oven" width="400">
 </p>
 
-# The software is released under the GNU GPL License. You can use it for personal but not commercial use.
+# This software is released under the GNU GPL License. You can use it for personal but not commercial use.
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
