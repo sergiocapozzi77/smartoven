@@ -29,6 +29,14 @@ Smart Oven is a classic oven with two heating elements, one on the top and one o
 
 The app is developed using Xamarin and Syncfusion UI components. In order to build the project open the subfolder app/ with Visual Studio with Xamarin core installed.
 The app communicate using Bluetooth Low Energy with the ESP32, is using a very simple protocol to read the sensor temperatures from the ESP32 and to send commands. I've tested the app on Android, never compiled for IOS.
+App features:
+
+- top and bottom temperature monitoring
+- top and bottom temperature independent controlling
+- turn on/off the oven
+- turn on / off the light
+- set the power of the top and bottom element to 0% / 25% / 50% / 75% / 100%
+- use one of the built-in recipe to automatically set the temperature over a period of time (i.e. recipe for a tray pizza: first 13 minutes at high temperature at the bottom, then high at the top, etc...)
 
 <p align="center">
   <img src="./img/app.jpg" alt="App" height="400">
