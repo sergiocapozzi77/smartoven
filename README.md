@@ -1,6 +1,13 @@
 # SmartOven
 
 Smart Oven is an oven that has no controls on its panel, all settings are managed through the SmartOven mobile app. The main purpose of smart oven is to cook pizza, so it is built to reac temperatures of 500° celsius (932° Fahrenheit).
+
+<p align="center">
+  <img src="./img/ObvenMain.png" alt="overview" height="800">
+</p>
+
+# The Project
+
 The project has 2 modules:
 
 - the firmware of the oven: is the firmware written for an ESP32 board that controls the oven.
