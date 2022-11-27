@@ -54,6 +54,7 @@ The oven has an internal chamber made of stainless steel, inside this chamber th
   <img src="./img/oven_open.jpg" alt="Oven" width="400">
 </p>
 
-# This software is released under the GNU GPL License. You can use it for personal but not commercial use.
+# License:
 
+This software is released under the GNU GPL License. You can use it for personal but not commercial use.
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
