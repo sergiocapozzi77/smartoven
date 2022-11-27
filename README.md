@@ -30,14 +30,27 @@ Smart Oven is a classic oven with two heating elements, one on the top and one o
 The app is developed using Xamarin and Syncfusion UI components. In order to build the project open the subfolder app/ with Visual Studio with Xamarin core installed.
 The app communicate using Bluetooth Low Energy with the ESP32, is using a very simple protocol to read the sensor temperatures from the ESP32 and to send commands. I've tested the app on Android, never compiled for IOS.
 
+<p align="center">
+  <img src="./img/app.jpg" alt="App" height="400">
+  <img src="./img/app2.jpg" alt="App" height="400">
+</p>
+
 # The Ovem: the Firmware
 
-The firmware for the ESP32 is written using the arduino libraries. You will find the firmware in the firmware/ subfolder of this repository. In order to compile it you need to open the project using a Visual Studio Code with the Platform IO extension installed.
+The firmware for the ESP32 is written using the arduino libraries. You will find the firmware in the firmware/ subfolder of this repository. In order to compile you need to open the project using a Visual Studio Code with the Platform IO extension installed.
 The ESP32 module communicate with two sensors to get the current top and bottom temperature and two dimmers to switch the elements on and off (with also the possibility to partialize the power from 0% to 100% in order to have a more smooth cooking)
 
-# The Oven: the hardware
+<p align="center">
+  <img src="./img/esp32.jpg" alt="Esp32" width="400">
+</p>
+
+# The Oven: the Hardware
 
 The oven has an internal chamber made of stainless steel, inside this chamber there are 2 heating elements, one on the topof 1900 Watts and one on the bottom of 800 Watts. On top of the bottom element there is a pizza stone. The door has a double ceramic glass. The outside is made of an alluminuom case.
 
+<p align="center">
+  <img src="./img/oven.jpg" alt="Oven" width="400">
+  <img src="./img/oven_open.jpg" alt="Oven" width="400">
+</p>
+
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-ss
