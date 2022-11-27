@@ -38,3 +38,6 @@ The ESP32 module communicate with two sensors to get the current top and bottom 
 # The Oven: the hardware
 
 The oven has an internal chamber made of stainless steel, inside this chamber there are 2 heating elements, one on the topof 1900 Watts and one on the bottom of 800 Watts. On top of the bottom element there is a pizza stone. The door has a double ceramic glass. The outside is made of an alluminuom case.
+
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+ss
