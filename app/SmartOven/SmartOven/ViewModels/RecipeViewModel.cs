@@ -174,6 +174,7 @@ namespace SmartOvenV2.ViewModels
             this.appStatusManager.ResetRecipeTimer();
 
             // set the start step as initiated
+            this.SelectedRecipe.ClearStatus();
             this.SelectedRecipe.Steps.First().Status = StepStatus.Completed;
             this.SelectedRecipe.Steps.First().ProgressValue = 100;
 
