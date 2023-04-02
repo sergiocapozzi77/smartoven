@@ -26,7 +26,7 @@ namespace SmartOvenV2.ViewModels
             this.recipesManager.RecipeChanged += OnRecipeChanged;
 
             TimerValue = TimeSpan.FromSeconds(0).ToString("hh\\:mm\\:ss", CultureInfo.InvariantCulture);
-            ResetCommand = new Command(ResetTimer);
+            ResetCommand = new Command(ResetTimer, () => IsStarted);
             currentRecipeStep = -1;
         }
 
@@ -89,6 +89,7 @@ namespace SmartOvenV2.ViewModels
                 this.OnPropertyChanged();
                 this.OnPropertyChanged(nameof(CanPause));
                 this.OnPropertyChanged(nameof(CanStart));
+                (ResetCommand as Command).ChangeCanExecute();
             }
         }
 
@@ -181,6 +182,11 @@ namespace SmartOvenV2.ViewModels
 
             Device.StartTimer(TimeSpan.FromSeconds(1), () =>
             {
+                if(this.cancellation.IsCancellationRequested)
+                {
+                    return false;
+                }
+
                 this.appStatusManager.UpdateRecipeTimer(IsPaused);
                 TimerValue = this.appStatusManager.AppStatus.RecipeTimer.Elapsed.ToString("hh\\:mm\\:ss", CultureInfo.InvariantCulture);
                 FollowRecipe(this.appStatusManager.AppStatus.RecipeTimer.Elapsed);
@@ -244,8 +250,9 @@ namespace SmartOvenV2.ViewModels
 
         void StopTimer()
         {
-            IsStarted = false;
             this.cancellation.Cancel();
+            IsStarted = false;
+            IsPaused = false;
             this.selectedRecipe?.ClearStatus();
         }
 

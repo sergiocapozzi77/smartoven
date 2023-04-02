@@ -5,7 +5,8 @@ namespace SmartOvenV2.Models
 {
     public enum Yeast
     {
-        Dried,
+        Dried1to2,
+        Dried2to3,
         Fresh,
         Sourdough
     };

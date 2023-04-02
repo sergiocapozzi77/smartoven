@@ -325,6 +325,7 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <buttons:SfButton
                         Margin="10,0,10,0"
@@ -333,7 +334,7 @@
                         BorderColor="{DynamicResource Gray-300}"
                         BorderThickness="1"
                         Command="{Binding SelectedYeastCommand}"
-                        CommandParameter="Dried"
+                        CommandParameter="Dried1to2"
                         HeightRequest="120"
                         HorizontalOptions="FillAndExpand"
                         IsCheckable="True"
@@ -346,7 +347,7 @@
                                     FontFamily="{StaticResource Montserrat-Medium}"
                                     FontSize="15"
                                     HorizontalOptions="CenterAndExpand"
-                                    Text="Dried"
+                                    Text="Dried 1/2"
                                     TextColor="{DynamicResource Gray-800}"
                                     VerticalTextAlignment="Center" />
                                 <Image HeightRequest="80" Source="yeast_dried.jpg" />
@@ -371,6 +372,50 @@
                     </buttons:SfButton>
                     <buttons:SfButton
                         Grid.Column="1"
+                        Margin="10,0,10,0"
+                        Padding="2"
+                        BackgroundColor="Transparent"
+                        BorderColor="{DynamicResource Gray-300}"
+                        BorderThickness="1"
+                        Command="{Binding SelectedYeastCommand}"
+                        CommandParameter="Dried2to3"
+                        HeightRequest="120"
+                        HorizontalOptions="FillAndExpand"
+                        IsCheckable="True"
+                        IsChecked="{Binding IsDriedYeast23}"
+                        VerticalOptions="Center">
+                        <buttons:SfButton.Content>
+                            <StackLayout Orientation="Vertical">
+                                <Label
+                                    Margin="0,2,0,0"
+                                    FontFamily="{StaticResource Montserrat-Medium}"
+                                    FontSize="15"
+                                    HorizontalOptions="CenterAndExpand"
+                                    Text="Dried 2/3"
+                                    TextColor="{DynamicResource Gray-800}"
+                                    VerticalTextAlignment="Center" />
+                                <Image HeightRequest="80" Source="yeast_dried.jpg" />
+                            </StackLayout>
+                        </buttons:SfButton.Content>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Checked">
+                                    <VisualState.Setters>
+                                        <Setter Property="BorderColor" Value="{DynamicResource Gray-800}" />
+                                        <Setter Property="BorderThickness" Value="2" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Unchecked">
+                                    <VisualState.Setters>
+                                        <Setter Property="BorderColor" Value="{DynamicResource Gray-300}" />
+                                        <Setter Property="BorderThickness" Value="1" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </buttons:SfButton>
+                    <buttons:SfButton
+                        Grid.Column="2"
                         Margin="10,0,10,0"
                         Padding="2"
                         BackgroundColor="Transparent"
@@ -414,7 +459,7 @@
                         </VisualStateManager.VisualStateGroups>
                     </buttons:SfButton>
                     <buttons:SfButton
-                        Grid.Column="2"
+                        Grid.Column="3"
                         Margin="10,0,10,0"
                         Padding="2"
                         BackgroundColor="Transparent"
@@ -469,7 +514,7 @@
                     BorderColor="{DynamicResource Gray-200}"
                     HeightRequest="1"
                     HorizontalOptions="Fill" />
-                <tabView:SfTabView>
+                <tabView:SfTabView EnableSwiping="False">
                     <tabView:SfTabItem Title="Direct">
                         <tabView:SfTabItem.Content>
                             <StackLayout Orientation="Vertical">
@@ -642,7 +687,7 @@
                                         HorizontalOptions="CenterAndExpand"
                                         LineHeight="{OnPlatform Android=1.5,
                                                                 Default=-1}"
-                                        Text="{Binding Fat, StringFormat='{0} gr'}"
+                                        Text="{Binding Fat, StringFormat='{0:F0} gr'}"
                                         TextColor="{DynamicResource Gray-900}"
                                         VerticalOptions="Center"
                                         VerticalTextAlignment="Center" />

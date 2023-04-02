@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace SmartOvenV2.ViewModels
@@ -53,16 +54,16 @@ namespace SmartOvenV2.ViewModels
             this.SelectedPizzaTypeCommand = new Command<string>(this.UserSelectedPizzaType);
             this.SelectedYeastCommand = new Command<string>(this.UserSelectedYeastType);
 
-            this.DoughBalls = 1;
-            this.BallWeight = 270;
-            this.WaterPerc = 65;
-            this.RoomTemperature = 21;
-            this.SaltPerc = 2.8F;
-            this.FatPerc = 2.7F;
-            this.TotalLeavening = 24;
-            this.FridgeLeavening = 20;
-            this.BigaPercentage = 70;
-            this.BigaWaterPercentage = 50;
+            this.DoughBalls = Preferences.Get(nameof(DoughBalls), 1);
+            this.BallWeight = Preferences.Get(nameof(BallWeight), 270); ;
+            this.WaterPerc = Preferences.Get(nameof(WaterPerc), 65); ;
+            this.RoomTemperature = Preferences.Get(nameof(RoomTemperature), 21); ;
+            this.SaltPerc = Preferences.Get(nameof(SaltPerc), 2.8F);
+            this.FatPerc = Preferences.Get(nameof(FatPerc), 2.7F);
+            this.TotalLeavening = Preferences.Get(nameof(TotalLeavening), 24);
+            this.FridgeLeavening = Preferences.Get(nameof(FridgeLeavening), 20);
+            this.BigaPercentage = Preferences.Get(nameof(BigaPercentage), 70);
+            this.BigaWaterPercentage = Preferences.Get(nameof(BigaWaterPercentage), 50);
 
             FillTips();
 
@@ -85,7 +86,8 @@ namespace SmartOvenV2.ViewModels
 
         public bool IsTray => SelectedPizzaType == PizzaType.Tray;
 
-        public bool IsDriedYeast => SelectedYeast == Models.Yeast.Dried;
+        public bool IsDriedYeast23 => SelectedYeast == Models.Yeast.Dried2to3;
+        public bool IsDriedYeast => SelectedYeast == Models.Yeast.Dried1to2;
         public bool IsFreshYeast => SelectedYeast == Models.Yeast.Fresh;
         public bool IsSourdoughYeast => SelectedYeast == Models.Yeast.Sourdough;
 
@@ -225,6 +227,7 @@ namespace SmartOvenV2.ViewModels
             set
             {
                 this.SetProperty(ref this.doughBalls, value);
+                Preferences.Set(nameof(DoughBalls), value);
                 this.Recalculate();
             }
         }
@@ -235,6 +238,7 @@ namespace SmartOvenV2.ViewModels
             set
             {
                 this.SetProperty(ref this.ballWeight, value);
+                Preferences.Set(nameof(BallWeight), value);
                 this.Recalculate();
             }
         }
@@ -245,6 +249,7 @@ namespace SmartOvenV2.ViewModels
             set
             {
                 this.SetProperty(ref this.saltPerc, value);
+                Preferences.Set(nameof(SaltPerc), value);
                 this.Recalculate();
             }
         }
@@ -255,6 +260,7 @@ namespace SmartOvenV2.ViewModels
             set
             {
                 this.SetProperty(ref this.fatPerc, value);
+                Preferences.Set(nameof(FatPerc), value);
                 this.Recalculate();
             }
         }
@@ -265,6 +271,7 @@ namespace SmartOvenV2.ViewModels
             set
             {
                 this.SetProperty(ref this.bigaPercentage, value);
+                Preferences.Set(nameof(BigaPercentage), value);
                 this.Recalculate();
             }
         }
@@ -276,6 +283,7 @@ namespace SmartOvenV2.ViewModels
             set
             {
                 this.SetProperty(ref this.bigaWaterPercentage, value);
+                Preferences.Set(nameof(BigaWaterPercentage), value);
                 this.Recalculate();
             }
         }
@@ -286,6 +294,7 @@ namespace SmartOvenV2.ViewModels
             set
             {
                 this.SetProperty(ref this.totalLeavening, value);
+                Preferences.Set(nameof(TotalLeavening), value);
                 this.Recalculate();
             }
         }
@@ -296,6 +305,7 @@ namespace SmartOvenV2.ViewModels
             set
             {
                 this.SetProperty(ref this.fridgeLeavening, value);
+                Preferences.Set(nameof(FridgeLeavening), value);
                 this.Recalculate();
             }
         }
@@ -350,6 +360,10 @@ namespace SmartOvenV2.ViewModels
             {
                 return yeast / 2;
             }
+            else if (this.IsDriedYeast23)
+            {
+                return yeast * 2 / 3;
+            }
             else if (this.IsSourdoughYeast)
             {
                 return yeast * 120;
@@ -387,6 +401,7 @@ namespace SmartOvenV2.ViewModels
 
                 OnPropertyChanged(nameof(IsDoughballs));
                 OnPropertyChanged(nameof(IsTray));
+                Preferences.Set(nameof(SelectedPizzaType), (int) value);
             }
         }
 
@@ -396,6 +411,7 @@ namespace SmartOvenV2.ViewModels
             set
             {
                 this.SetProperty(ref this.roomTemperature, value);
+                Preferences.Set(nameof(RoomTemperature), value);
                 this.Recalculate();
             }
         }
@@ -408,6 +424,7 @@ namespace SmartOvenV2.ViewModels
             set
             {
                 this.SetProperty(ref this.waterPerc, value);
+                Preferences.Set(nameof(WaterPerc), value);
                 this.Recalculate();
             }
         }
@@ -418,9 +435,11 @@ namespace SmartOvenV2.ViewModels
             set
             {
                 this.SetProperty(ref this.selectedYeast, value);
+                Preferences.Set(nameof(SelectedYeast), (int) value);
                 this.Recalculate();
 
                 OnPropertyChanged(nameof(IsDriedYeast));
+                OnPropertyChanged(nameof(IsDriedYeast23));
                 OnPropertyChanged(nameof(IsFreshYeast));
                 OnPropertyChanged(nameof(IsSourdoughYeast));
             }
