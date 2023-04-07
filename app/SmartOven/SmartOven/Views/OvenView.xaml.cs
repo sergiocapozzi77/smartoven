@@ -27,12 +27,12 @@ namespace SmartOvenV2.Views
         }
 
 
-        private async void MarkerPointer_BottomValueChangeCompleted(object sender, Syncfusion.SfGauge.XForms.PointerValueChangedEventArgs e)
+        private void MarkerPointer_BottomValueChangeCompleted(object sender, Syncfusion.SfGauge.XForms.PointerValueChangedEventArgs e)
         {
             vm.SetBottomDesiredTemperature(e.Value);
         }
 
-        private async void MarkerPointer_TopValueChangeCompleted(object sender, Syncfusion.SfGauge.XForms.PointerValueChangedEventArgs e)
+        private void MarkerPointer_TopValueChangeCompleted(object sender, Syncfusion.SfGauge.XForms.PointerValueChangedEventArgs e)
         {
             vm.SetTopDesiredTemperature(e.Value);
         }

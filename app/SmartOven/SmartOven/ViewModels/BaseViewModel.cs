@@ -163,7 +163,7 @@ namespace SmartOvenV2.ViewModels
             this.IsConnected = false;
 #endif
 
-            Device.BeginInvokeOnMainThread(async () =>
+            Device.BeginInvokeOnMainThread(() =>
             {
                 UserDialogs.Instance.Alert("Error", e.Message, "OK");
             });

@@ -86,6 +86,25 @@ namespace SmartOvenV2.Services
                 {
                     new RecipeStep(350, 250,100, 100, TimeSpan.FromMinutes(3), "Top", false),
                 }));
+            recipes.Add(new Recipe(
+                "casatiello_napoletano.jpg",
+                "Casatiello",
+                190,
+                220,
+                new[]
+                {
+                                new RecipeStep(190, 220,25, 100, TimeSpan.FromMinutes(25), "Initial cooking"),
+                                new RecipeStep(190, 220,25, 100, TimeSpan.FromMinutes(25), "Rotate the tray"),
+                }));
+            recipes.Add(new Recipe(
+        "trays.jpg",
+        "Blue iron tray burning",
+        200,
+        200,
+        new[]
+        {
+                    new RecipeStep(200, 200,75, 100, TimeSpan.FromMinutes(10), "Burning", false),
+        }));
 
 #if DEBUG
             recipes.Add(new Recipe(

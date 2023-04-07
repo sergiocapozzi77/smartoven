@@ -94,7 +94,7 @@ namespace SmartOvenV2.ViewModels
 
         private void OtaService_OnUpdateEnd(object sender, bool success)
         {
-            Device.BeginInvokeOnMainThread(async () =>
+            Device.BeginInvokeOnMainThread(() =>
             {
                 this.IsUpdating = false;
                 progressDialog.Hide();
@@ -104,7 +104,7 @@ namespace SmartOvenV2.ViewModels
 
         private void OtaService_OnProgressUpdate(object sender, ProgressUpdate e)
         {
-            Device.BeginInvokeOnMainThread(async () =>
+            Device.BeginInvokeOnMainThread(() =>
             {
                 progressDialog.Title = e.Info;
                 progressDialog.PercentComplete = (int)e.Progress;
