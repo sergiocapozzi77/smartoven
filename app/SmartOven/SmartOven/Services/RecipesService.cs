@@ -24,24 +24,24 @@ namespace SmartOvenV2.Services
             recipes.Add(new Recipe(
                 "PizzaTeglia.jpg",
                 "Tray Pizza Red Base",
-                280,
-                300,
+                250,
+                310,
                 new[]
                 {
-                    new RecipeStep(280, 300, 50, 100, TimeSpan.FromMinutes(7), "Cooking the bottom", false),
-                    new RecipeStep(280, 300, 50, 100, TimeSpan.FromMinutes(6), "Flip tray"),
-                    new RecipeStep(290, 300, 100, 100, TimeSpan.FromMinutes(4), "Cooking the Top")
+                    new RecipeStep(250, 310, 50, 100, TimeSpan.FromMinutes(7), "Cooking the bottom", false),
+                    new RecipeStep(250, 310, 50, 100, TimeSpan.FromMinutes(6), "Flip tray"),
+                    new RecipeStep(280, 310, 100, 100, TimeSpan.FromMinutes(4), "Cooking the Top")
                 }));
             recipes.Add(new Recipe(
               "TegliaBianca.jpg",
               "Tray Pizza White Base",
-              280,
-              300,
+              250,
+              310,
               new[]
               {
-                    new RecipeStep(280, 300, 25, 100, TimeSpan.FromMinutes(7), "Cooking the bottom", false),
-                    new RecipeStep(280, 300, 25, 100, TimeSpan.FromMinutes(6), "Flip tray"),
-                    new RecipeStep(290, 300, 100, 100, TimeSpan.FromMinutes(4), "Cooking the Top")
+                    new RecipeStep(250, 310, 25, 100, TimeSpan.FromMinutes(7), "Cooking the bottom", false),
+                    new RecipeStep(250, 310, 25, 100, TimeSpan.FromMinutes(6), "Flip tray"),
+                    new RecipeStep(280, 310, 100, 100, TimeSpan.FromMinutes(4), "Cooking the Top")
               }));
             recipes.Add(new Recipe(
               "detroit_style.jpg",
@@ -50,9 +50,9 @@ namespace SmartOvenV2.Services
               300,
               new[]
               {
-                                new RecipeStep(250, 300, 25, 100, TimeSpan.FromMinutes(7), "Cooking the bottom", false),
-                                new RecipeStep(250, 300, 75, 100, TimeSpan.FromMinutes(6), "Add cheese"),
-                                new RecipeStep(270, 300, 100, 100, TimeSpan.FromMinutes(2), "Add tomato sauce")
+                    new RecipeStep(250, 300, 25, 100, TimeSpan.FromMinutes(7), "Cooking the bottom", false),
+                    new RecipeStep(250, 300, 75, 100, TimeSpan.FromMinutes(6), "Add cheese"),
+                    new RecipeStep(270, 300, 100, 100, TimeSpan.FromMinutes(2), "Add tomato sauce")
               }));
             recipes.Add(new Recipe(
                 "Bread.jpg",
@@ -89,12 +89,13 @@ namespace SmartOvenV2.Services
             recipes.Add(new Recipe(
                 "casatiello_napoletano.jpg",
                 "Casatiello",
-                190,
+                180,
                 220,
                 new[]
                 {
-                                new RecipeStep(190, 220,25, 100, TimeSpan.FromMinutes(25), "Initial cooking"),
-                                new RecipeStep(190, 220,25, 100, TimeSpan.FromMinutes(25), "Rotate the tray"),
+                    new RecipeStep(180, 220, 0, 100, TimeSpan.FromMinutes(20), "Initial cooking", false),
+                    new RecipeStep(180, 220, 25, 100, TimeSpan.FromMinutes(15), "Rotate the tray"),
+                    new RecipeStep(190, 220, 25, 100, TimeSpan.FromMinutes(10), "Colouring the top"),
                 }));
             recipes.Add(new Recipe(
         "trays.jpg",
