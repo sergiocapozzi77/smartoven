@@ -15,10 +15,11 @@ namespace SmartOvenV2.ViewModels
 {
     class RecipeViewModel : BaseViewModel
     {
-        public RecipeViewModel(IStatusPoller statusPoller, IBleConnector dataService, IRecipesService recipes, IRecipesManager recipesManager, IAppStatusManager appStatusManager) : base(statusPoller, dataService)
+        public RecipeViewModel(IStatusPoller statusPoller, IBleConnector dataService, IRecipesService recipes, IRecipesManager recipesManager, IAppStatusManager appStatusManager, INotificationService notificationService) : base(statusPoller, dataService)
         {
             this.recipesManager = recipesManager;
             this.appStatusManager = appStatusManager;
+            this.notificationService = notificationService;
             StartCommand = new Command(StartTimer, () => TimerEnabled);
             PauseCommand = new Command(PauseTimer);
             Recipes = recipes.GetRecipes();
@@ -32,6 +33,7 @@ namespace SmartOvenV2.ViewModels
 
         private readonly IRecipesManager recipesManager;
         private readonly IAppStatusManager appStatusManager;
+        private readonly INotificationService notificationService;
         private DateTime startTime;
         private CancellationTokenSource cancellation;
         private int currentRecipeStep;
@@ -228,6 +230,7 @@ namespace SmartOvenV2.ViewModels
                         this.currentRecipeStep = i;
                         step.ProgressValue = 100;
                         step.Status = StepStatus.Completed;
+                        this.notificationService.ShowNotification("Step completed", step.Title);
                     } else if(i < recipe.Steps.Count - 1)
                     {
                         var nextStep = recipe.Steps[i+1];

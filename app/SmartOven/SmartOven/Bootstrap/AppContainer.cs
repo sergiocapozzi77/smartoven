@@ -27,6 +27,7 @@ namespace PizzaTime.Bootstrap
             builder.RegisterType<RecipesManager>().As<IRecipesManager>().SingleInstance();
             builder.RegisterType<AppStatusManager>().As<IAppStatusManager>().SingleInstance();
             builder.RegisterType<OtaService>().As<IOtaService>().SingleInstance();
+            builder.RegisterType<NotificationService>().As<INotificationService>().SingleInstance();
 
             builder.RegisterType<OvenViewModel>();
             builder.RegisterType<InfoViewModel>();
