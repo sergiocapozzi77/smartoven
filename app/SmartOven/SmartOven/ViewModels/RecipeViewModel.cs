@@ -51,7 +51,7 @@ namespace SmartOvenV2.ViewModels
                 {
                     this.recipesManager.GetSelectedRecipe().IsSelected = false;
                     this.recipesManager.SetSelectedRecipe(null);
-                   // this.IsOvenOn = false;
+                    // this.IsOvenOn = false;
                 }
                 else
                 {
@@ -62,7 +62,7 @@ namespace SmartOvenV2.ViewModels
 
                     this.recipesManager.SetSelectedRecipe(value);
                     value.IsSelected = true;
-                 //   this.IsOvenOn = true;
+                    //   this.IsOvenOn = true;
                     isSelectingNewRecipe = true;
                 }
             }
@@ -87,7 +87,7 @@ namespace SmartOvenV2.ViewModels
             get => isStarted;
             set
             {
-                isStarted = value; 
+                isStarted = value;
                 this.OnPropertyChanged();
                 this.OnPropertyChanged(nameof(CanPause));
                 this.OnPropertyChanged(nameof(CanStart));
@@ -116,6 +116,20 @@ namespace SmartOvenV2.ViewModels
             set
             {
                 selectedRecipe = value;
+                Console.WriteLine("Selected recipe " + selectedRecipe);
+                this.OnPropertyChanged();
+                if (selectedRecipe != null)
+                {
+                    this.SelectedTab = 1;
+                }
+            }
+        }
+
+        public int SelectedTab
+        {
+            get => selectedTab; set
+            {
+                selectedTab = value;
                 this.OnPropertyChanged();
             }
         }
@@ -124,6 +138,8 @@ namespace SmartOvenV2.ViewModels
         private bool isStarted;
         private Recipe selectedRecipe;
         private bool isPaused;
+        private int selectedTab;
+
         public IList<Recipe> Recipes { get; }
 
 #if DEBUG
@@ -137,7 +153,7 @@ namespace SmartOvenV2.ViewModels
             get => timerValue;
             set
             {
-                this.timerValue = value; 
+                this.timerValue = value;
                 this.OnPropertyChanged();
             }
         }
@@ -164,13 +180,14 @@ namespace SmartOvenV2.ViewModels
 
         void StartTimer()
         {
-            if(IsPaused)
+            if (IsPaused)
             {
                 this.appStatusManager.ResumeRecipeTimer();
                 IsPaused = false;
                 return;
             }
 
+            currentRecipeStep = -1;
             startTime = DateTime.Now;
             IsStarted = true;
             this.cancellation = new CancellationTokenSource();
@@ -184,7 +201,7 @@ namespace SmartOvenV2.ViewModels
 
             Device.StartTimer(TimeSpan.FromSeconds(1), () =>
             {
-                if(this.cancellation.IsCancellationRequested)
+                if (this.cancellation.IsCancellationRequested)
                 {
                     return false;
                 }
@@ -199,50 +216,77 @@ namespace SmartOvenV2.ViewModels
 
         void FollowRecipe(TimeSpan elapsed)
         {
-            var recipe = this.recipesManager.GetSelectedRecipe();
-            if (recipe == null)
+            try
             {
-                StopTimer();
-                return;
-            }
-
-            var previousDuration = TimeSpan.Zero;
-            
-            for (var i = 0; i < recipe.Steps.Count; i++)
-            {
-                var step = recipe.Steps[i];
-                if (elapsed > previousDuration &&
-                    elapsed < previousDuration + step.Duration)
+                var recipe = this.recipesManager.GetSelectedRecipe();
+                if (recipe == null)
                 {
-                    if (this.currentRecipeStep < i)
-                    {
-                        this.dataService.SetTopTemperature(step.TopTemperature);
-                        this.dataService.SetBottomTemperature(step.BottomTemperature);
-
-                        this.dataService.SetTopMaxPower(step.TopMaxPower);
-                        this.dataService.SetBottomMaxPower(step.BottomMaxPower);
-
-                        if(step.Pause)
-                        {
-                            this.PauseTimer();
-                        }
-
-                        this.currentRecipeStep = i;
-                        step.ProgressValue = 100;
-                        step.Status = StepStatus.Completed;
-                        this.notificationService.ShowNotification("Step completed", step.Title);
-                    } else if(i < recipe.Steps.Count - 1)
-                    {
-                        var nextStep = recipe.Steps[i+1];
-                        nextStep.ProgressValue = ((elapsed.TotalSeconds - previousDuration.TotalSeconds) /
-                                                  nextStep.Duration.TotalSeconds) * 100;
-                    }
-
-                    break;
+                    StopTimer();
+                    return;
                 }
 
-                previousDuration += step.Duration;
+                var previousDuration = TimeSpan.Zero;
+
+                for (var i = 0; i < recipe.Steps.Count; i++)
+                {
+                    var step = recipe.Steps[i];
+                    if (elapsed > previousDuration &&
+                        elapsed < previousDuration + step.Duration)
+                    {
+                        if (this.currentRecipeStep < i)
+                        {
+                            this.dataService.SetTopTemperature(step.TopTemperature);
+                            this.dataService.SetBottomTemperature(step.BottomTemperature);
+
+                            this.dataService.SetTopMaxPower(step.TopMaxPower);
+                            this.dataService.SetBottomMaxPower(step.BottomMaxPower);
+
+                            if (step.Pause)
+                            {
+                                this.PauseTimer();
+                            }
+
+                            this.currentRecipeStep = i;
+                            step.ProgressValue = 100;
+                            step.Status = StepStatus.Completed;
+
+                            Console.WriteLine($"Step {step.Title} completed");
+
+                            if (i < recipe.Steps.Count - 1)
+                            {
+                                if (i > 0)
+                                {   // don't show the first step completed
+                                    this.notificationService.ShowNotification("Completed: " + step.Title, "Next: " + recipe.Steps[i + 1].Title);
+                                }
+                            }
+                            else
+                            {
+                                StopTimer();
+                                this.notificationService.ShowNotification("End: " + step.Title, "");
+                            }
+
+                        }
+                        else if (i < recipe.Steps.Count - 1)
+                        {
+                            var nextStep = recipe.Steps[i + 1];
+                            nextStep.ProgressValue = ((elapsed.TotalSeconds - previousDuration.TotalSeconds) /
+                                                      nextStep.Duration.TotalSeconds) * 100;
+
+                            Console.WriteLine($"Moving step {nextStep.Title} to {nextStep.ProgressValue}");
+                        }
+
+                        break;
+                    }
+
+                    previousDuration += step.Duration;
+                }
+
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: " + ex.Message, ex);
+            }
+
         }
 
         void PauseTimer()
@@ -256,7 +300,7 @@ namespace SmartOvenV2.ViewModels
             this.cancellation.Cancel();
             IsStarted = false;
             IsPaused = false;
-            this.selectedRecipe?.ClearStatus();
+            //            this.selectedRecipe?.ClearStatus();
         }
 
     }

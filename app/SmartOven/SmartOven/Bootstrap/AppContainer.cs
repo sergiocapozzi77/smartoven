@@ -6,6 +6,7 @@ using SmartOvenV2.Services;
 using SmartOvenV2.ViewModels;
 using System;
 using SmartOvenV2.Managers;
+using SmartOvenV2.Models;
 
 namespace PizzaTime.Bootstrap
 {
@@ -28,6 +29,7 @@ namespace PizzaTime.Bootstrap
             builder.RegisterType<AppStatusManager>().As<IAppStatusManager>().SingleInstance();
             builder.RegisterType<OtaService>().As<IOtaService>().SingleInstance();
             builder.RegisterType<NotificationService>().As<INotificationService>().SingleInstance();
+            builder.RegisterType<RecipeStepFactory>().As<IRecipeStepFactory>().SingleInstance();
 
             builder.RegisterType<OvenViewModel>();
             builder.RegisterType<InfoViewModel>();

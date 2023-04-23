@@ -21,7 +21,7 @@
         <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
     </ContentPage.Resources>
     <ContentPage.Content>
-        <tabView:SfTabView>
+        <tabView:SfTabView SelectedIndex="{Binding SelectedTab}" EnableSwiping="True">
             <tabView:SfTabItem Title="Cookbook">
                 <tabView:SfTabItem.Content>
                     <Grid>

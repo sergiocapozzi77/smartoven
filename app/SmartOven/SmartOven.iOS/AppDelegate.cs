@@ -10,6 +10,7 @@ using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using Syncfusion.XForms.iOS.PopupLayout;
+using Plugin.LocalNotification;
 
 namespace SmartOvenV2.iOS
 {
@@ -39,6 +40,12 @@ namespace SmartOvenV2.iOS
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);
+        }
+
+        public override void WillEnterForeground(UIApplication uiApplication)
+        {
+            LocalNotificationCenter.ResetApplicationIconBadgeNumber(uiApplication);
+            base.WillEnterForeground(uiApplication);
         }
     }
 }

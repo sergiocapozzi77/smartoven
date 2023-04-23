@@ -27,31 +27,31 @@ namespace SmartOvenV2.Services
             switch (e)
             {
                 case "SU":
-                {
-                    this.OnProgressUpdate?.Invoke(this, new ProgressUpdate("Update success, oven is restarting"));
+                    {
+                        this.OnProgressUpdate?.Invoke(this, new ProgressUpdate("Update success, oven is restarting"));
                         success = true;
-                    break;
-                }
+                        break;
+                    }
                 case "ERE":
-                {
-                    this.OnProgressUpdate?.Invoke(this, new ProgressUpdate("Update failed: code 1"));
-                    break;
-                }
+                    {
+                        this.OnProgressUpdate?.Invoke(this, new ProgressUpdate("Update failed: code 1"));
+                        break;
+                    }
                 case "ERB":
-                {
-                    this.OnProgressUpdate?.Invoke(this, new ProgressUpdate("Update failed: code 2"));
-                    break;
-                }
+                    {
+                        this.OnProgressUpdate?.Invoke(this, new ProgressUpdate("Update failed: code 2"));
+                        break;
+                    }
                 case "ERW":
-                {
-                    this.OnProgressUpdate?.Invoke(this, new ProgressUpdate("Update failed: code 3"));
-                    break;
-                }
+                    {
+                        this.OnProgressUpdate?.Invoke(this, new ProgressUpdate("Update failed: code 3"));
+                        break;
+                    }
                 default:
-                {
-                    this.OnProgressUpdate?.Invoke(this, new ProgressUpdate("Update failed: code 9"));
-                    break;
-                }
+                    {
+                        this.OnProgressUpdate?.Invoke(this, new ProgressUpdate("Update failed: code 9"));
+                        break;
+                    }
             }
 
             bleConnector.StopOta();
@@ -105,7 +105,7 @@ namespace SmartOvenV2.Services
                     var buffer = new byte[packetSize];
                     for (var i = 0; i < packetNumber; i++)
                     {
-                        var progress = ((i + 1) / (double) packetNumber) * 100.0;
+                        var progress = ((i + 1) / (double)packetNumber) * 100.0;
                         this.OnProgressUpdate?.Invoke(this, new ProgressUpdate("Updating", progress));
                         var read = await firmware.ReadAsync(buffer, 0, packetSize);
                         if (read != packetSize)
@@ -123,7 +123,7 @@ namespace SmartOvenV2.Services
                     if (lastPacketSize > 0)
                     {
                         buffer = new byte[lastPacketSize];
-                        var read = await firmware.ReadAsync(buffer, 0, (int) lastPacketSize);
+                        var read = await firmware.ReadAsync(buffer, 0, (int)lastPacketSize);
                         if (read != lastPacketSize)
                         {
                             throw new Exception("OTA Failed");
@@ -138,7 +138,7 @@ namespace SmartOvenV2.Services
                     this.OnProgressUpdate?.Invoke(this, new ProgressUpdate("Finalizing", 100));
                     await bleConnector.SendOtaData(Encoding.ASCII.GetBytes("@END"));
                     OnUpdateEnd?.Invoke(this, true);
-                } 
+                }
                 else
                 {
                     OnUpdateEnd?.Invoke(this, false);
@@ -156,6 +156,7 @@ namespace SmartOvenV2.Services
 
         private async Task<MemoryStream> DownloadFileAsync(string fileUrl)
         {
+#if !DEBUG
             try
             {
                 using (var client = new HttpClient())
@@ -172,6 +173,9 @@ namespace SmartOvenV2.Services
                 //TODO handle exception
                 return null;
             }
+#else
+            return null;
+#endif
         }
     }
 }

@@ -6,6 +6,8 @@ using System.Net;
 using Acr.UserDialogs;
 using Plugin.Permissions;
 using Syncfusion.XForms.Android.PopupLayout;
+using Plugin.LocalNotification;
+using Android.Content;
 
 namespace SmartOvenV2.Droid
 {
@@ -33,8 +35,22 @@ namespace SmartOvenV2.Droid
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             SfPopupLayoutRenderer.Init();
+
+            // Must create a Notification Channel when API >= 26
+            // you can create multiple Notification Channels with different names.
+            LocalNotificationCenter.CreateNotificationChannel();
+
             LoadApplication(new App());
+
+            LocalNotificationCenter.NotifyNotificationTapped(Intent);
         }
+
+        protected override void OnNewIntent(Intent intent)
+        {
+            LocalNotificationCenter.NotifyNotificationTapped(intent);
+            base.OnNewIntent(intent);
+        }
+
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
