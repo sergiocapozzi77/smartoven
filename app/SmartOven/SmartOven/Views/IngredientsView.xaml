@@ -328,7 +328,7 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <buttons:SfButton
-                        Margin="10,0,10,0"
+                        Margin="3,0,1,0"
                         Padding="2"
                         BackgroundColor="Transparent"
                         BorderColor="{DynamicResource Gray-300}"
@@ -372,7 +372,7 @@
                     </buttons:SfButton>
                     <buttons:SfButton
                         Grid.Column="1"
-                        Margin="10,0,10,0"
+                        Margin="1,0,1,0"
                         Padding="2"
                         BackgroundColor="Transparent"
                         BorderColor="{DynamicResource Gray-300}"
@@ -416,7 +416,7 @@
                     </buttons:SfButton>
                     <buttons:SfButton
                         Grid.Column="2"
-                        Margin="10,0,10,0"
+                        Margin="1,0,1,0"
                         Padding="2"
                         BackgroundColor="Transparent"
                         BorderColor="{DynamicResource Gray-300}"
@@ -460,7 +460,7 @@
                     </buttons:SfButton>
                     <buttons:SfButton
                         Grid.Column="3"
-                        Margin="10,0,10,0"
+                        Margin="1,0,3,0"
                         Padding="2"
                         BackgroundColor="Transparent"
                         BorderColor="{DynamicResource Gray-300}"

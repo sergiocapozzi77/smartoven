@@ -256,7 +256,7 @@ namespace SmartOvenV2.ViewModels
                             {
                                 if (i > 0)
                                 {   // don't show the first step completed
-                                    this.notificationService.ShowNotification("Completed: " + step.Title, "Next: " + recipe.Steps[i + 1].Title);
+                                    this.notificationService.ShowNotification("Completed: " + recipe.Steps[i - 1].Title, "Next: " + step.Title);
                                 }
                             }
                             else
