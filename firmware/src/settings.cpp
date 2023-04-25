@@ -20,9 +20,11 @@ Settings::Settings()
     this->bottomThermoCLK = 4;
 
     this->topCpuThermoVcc = 14;
-    this->topCpuThermoSensor = 12;
+    this->topCpuThermoSensor = 36;
     this->bottomCpuThermoVcc = 26;
-    this->bottomCpuThermoSensor = 27;
+    this->bottomCpuThermoSensor = 34;
+
+    this->relayPin = 21;
 
     this->sampleTime = 1000;
 }

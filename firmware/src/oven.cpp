@@ -1,5 +1,6 @@
 #include "oven.hpp"
 #include "settings.hpp"
+#include <BlynkSimpleEsp32.h>
 
 Oven::Oven()
 {
@@ -38,7 +39,7 @@ void Oven::Create()
     this->topElementController = new ElementController(&this->ovenStatus, this->topElement);
     this->bottomElementController = new ElementController(&this->ovenStatus, this->bottomElement);
 
-    this->relay = new Relay(0, 2);
+    this->relay = new Relay(settings.relayPin);
 
     Serial.println(F("Creating ble manager"));
     this->bleManager = new BLEManager(this);
@@ -50,8 +51,11 @@ OvenStatus *Oven::GetStatus()
     return &this->ovenStatus;
 }
 
+float tt = 1;
 void Oven::DoCheck()
 {
+    tt += 1.5;
+    Blynk.virtualWrite(V3, tt);
     // Serial.println("Start checks");
 
     if (this->ovenStatus.status == 0)
@@ -81,7 +85,6 @@ void Oven::DoCheck()
 
     this->topElementController->CheckTemperature();
     this->bottomElementController->CheckTemperature();
-
     // Serial.println("End checks");
 }
 

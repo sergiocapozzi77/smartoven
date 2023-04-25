@@ -6,7 +6,7 @@ class Relay
   int rel_pins[5];
 
 public:
-  Relay(int rel1_pin, int rel2_pin);
+  Relay(int rel1_pin);
   void SetStatus(int pin, int status);
 };
 

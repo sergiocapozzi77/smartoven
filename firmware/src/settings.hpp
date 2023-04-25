@@ -30,6 +30,9 @@ public:
     int bottomCpuThermoSensor;
 
     int sampleTime;
+
+    // relay
+    int relayPin;
 };
 
 extern Settings settings;

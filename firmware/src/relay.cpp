@@ -1,13 +1,11 @@
 #include "relay.hpp"
 #include <Arduino.h>
 
-Relay::Relay(int rel1_pin, int rel2_pin)
+Relay::Relay(int rel1_pin)
 {
   this->rel_pins[0] = rel1_pin;
-  this->rel_pins[1] = rel2_pin;
 
   pinMode(rel1_pin, OUTPUT);
-  pinMode(rel2_pin, OUTPUT);
 }
 
 void Relay::SetStatus(int index, int status)
