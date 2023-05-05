@@ -36,8 +36,8 @@
                             Margin="0"
                             Padding="0,5,0,5"
                             BackgroundColor="#F0F0F0"
-                            ItemSize="{OnPlatform Android={OnIdiom Phone=100,
-                                                                   Tablet=100},
+                            ItemSize="{OnPlatform Android={OnIdiom Phone=110,
+                                                                   Tablet=110},
                                                   iOS={OnIdiom Phone=100,
                                                                Tablet=90},
                                                   UWP={OnIdiom Phone=120,
@@ -83,15 +83,12 @@
                                                     VerticalOptions="Start"
                                                     WidthRequest="28" />
                                             <Grid Grid.Column="1">
-                                              
-
-                                                <StackLayout Padding="10,0,0,0">
-                                                    <StackLayout.VerticalOptions>
-                                                        <OnPlatform x:TypeArguments="LayoutOptions">
-                                                            <On Platform="macOS" Value="CenterAndExpand" />
-                                                        </OnPlatform>
-                                                    </StackLayout.VerticalOptions>
-                                                    <Label
+                                                    <Grid.RowDefinitions>
+                                                    <RowDefinition Height="0.2*"/>
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto"/>
+                                                </Grid.RowDefinitions>
+                                                    <Label Grid.Row="0"
                                                         FontAttributes="Bold"
                                                         FontSize="{OnPlatform Android={OnIdiom Phone=18,
                                                                                                Tablet=22},
@@ -104,12 +101,12 @@
                                                                               WPF=26}"
                                                         LineBreakMode="CharacterWrap"
                                                         Text="{Binding ImageTitle}" />
-                                                    <StackLayout Orientation="Horizontal">
-                                                        <Label FontSize="{OnPlatform Android={OnIdiom Phone=12, Tablet=13}, iOS={OnIdiom Phone=11, Tablet=13}, UWP={OnIdiom Phone=10, Tablet=14, Desktop=16}, macOS=13, WPF=16}" Text="{Binding TopTemperature, StringFormat='Top: {0:F1}°'}" />
-                                                        <Label FontSize="{OnPlatform Android={OnIdiom Phone=12, Tablet=13}, iOS={OnIdiom Phone=11, Tablet=13}, UWP={OnIdiom Phone=10, Tablet=14, Desktop=16}, macOS=13, WPF=16}" Text="{Binding TopTemperature, StringFormat=' / '}" />
-                                                        <Label FontSize="{OnPlatform Android={OnIdiom Phone=12, Tablet=13}, iOS={OnIdiom Phone=11, Tablet=13}, UWP={OnIdiom Phone=10, Tablet=14, Desktop=16}, macOS=13, WPF=16}" Text="{Binding BottomTemperature, StringFormat='Bottom: {0:F1}°'}" />
-                                                    </StackLayout>
-                                                    <StackLayout Orientation="Horizontal">
+                                                <StackLayout Orientation="Horizontal" Grid.Row="1">
+                                                    <Label FontSize="{OnPlatform Android={OnIdiom Phone=12, Tablet=13}, iOS={OnIdiom Phone=11, Tablet=13}, UWP={OnIdiom Phone=10, Tablet=14, Desktop=16}, macOS=13, WPF=16}" Text="{Binding TopTemperature, StringFormat='Top: {0:F1}°'}" />
+                                                    <Label FontSize="{OnPlatform Android={OnIdiom Phone=12, Tablet=13}, iOS={OnIdiom Phone=11, Tablet=13}, UWP={OnIdiom Phone=10, Tablet=14, Desktop=16}, macOS=13, WPF=16}" Text="{Binding TopTemperature, StringFormat=' / '}" />
+                                                    <Label FontSize="{OnPlatform Android={OnIdiom Phone=12, Tablet=13}, iOS={OnIdiom Phone=11, Tablet=13}, UWP={OnIdiom Phone=10, Tablet=14, Desktop=16}, macOS=13, WPF=16}" Text="{Binding BottomTemperature, StringFormat='Bottom: {0:F1}°'}" />
+                                                </StackLayout>
+                                                <StackLayout Orientation="Horizontal" Grid.Row="2" Margin="0,0,5,5">
                                                         <buttons:SfButton
                                                         BackgroundColor="{DynamicResource PrimaryColor}"
                                                         Command="{Binding BindingContext.ShowRecipeCommand, Source={x:Reference Name=RecipesList}}"
@@ -139,8 +136,6 @@
                                                         WidthRequest="{OnIdiom Default=100,
                                                      Phone=-1}" />
                                                     </StackLayout>
-                                                    
-                                                </StackLayout>
                                             </Grid>
                                         </Grid>
                                     </Frame>
