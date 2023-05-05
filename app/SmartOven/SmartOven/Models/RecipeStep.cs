@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using Newtonsoft.Json.Linq;
 using SmartOvenV2.Annotations;
 using SmartOvenV2.Services;
 using Syncfusion.XForms.ProgressBar;
@@ -64,6 +66,19 @@ namespace SmartOvenV2.Models
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        internal static RecipeStep FromJToken(JToken recipeStep)
+        {
+            return new RecipeStep(
+                recipeStep.Value<double>("Top Temperature"),
+                recipeStep.Value<double>("Bottom Temperature"),
+                recipeStep.Value<double>("Top Max Power") * 100,
+                recipeStep.Value<double>("Bottom Max Power") * 100,
+                TimeSpan.FromSeconds(recipeStep.Value<double>("Duration")),
+                recipeStep.Value<string>("Name"),
+                recipeStep.Value<bool>("Pause")
+                );
+        }
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

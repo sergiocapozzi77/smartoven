@@ -324,6 +324,18 @@
         </Setter>
     </Style>
 
+    <Style
+        x:Key="SquareButtonStyle"
+        TargetType="buttons:SfButton">
+        <Setter Property="BorderColor" Value="{DynamicResource Gray-300}" />
+        <Setter Property="BorderWidth" Value="0" />
+        <Setter Property="Padding" Value="1" />
+        <Setter Property="CornerRadius" Value="0" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryColor}"/>
+    </Style>
+
     <!--  Common button style  -->
     <Style
         x:Key="SfOnboardingButtonStyle"

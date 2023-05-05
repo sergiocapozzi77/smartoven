@@ -30,6 +30,8 @@ namespace SmartOvenV2
         {
             AppCenter.Start(Licenses.AppCenter,
                 typeof(Analytics), typeof(Crashes));
+
+            var seatable = AppContainer.Resolve<ISeatableDataService>();
         }
 
         protected override void OnSleep()

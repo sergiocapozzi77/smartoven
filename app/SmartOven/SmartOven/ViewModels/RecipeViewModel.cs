@@ -15,14 +15,26 @@ namespace SmartOvenV2.ViewModels
 {
     class RecipeViewModel : BaseViewModel
     {
-        public RecipeViewModel(IStatusPoller statusPoller, IBleConnector dataService, IRecipesService recipes, IRecipesManager recipesManager, IAppStatusManager appStatusManager, INotificationService notificationService) : base(statusPoller, dataService)
+        public RecipeViewModel(
+            IStatusPoller statusPoller, 
+            IBleConnector dataService, 
+            IRecipesService recipesService, 
+            IRecipesManager recipesManager, 
+            IAppStatusManager appStatusManager,
+            INotificationService notificationService) : base(statusPoller, dataService)
         {
+            this.recipesService = recipesService;
             this.recipesManager = recipesManager;
             this.appStatusManager = appStatusManager;
             this.notificationService = notificationService;
             StartCommand = new Command(StartTimer, () => TimerEnabled);
             PauseCommand = new Command(PauseTimer);
-            Recipes = recipes.GetRecipes();
+            CookCommand = new Command<Recipe>(OnCookCommand);
+            ShowRecipeCommand = new Command<Recipe>(OnShowRecipeCommand);
+            recipesService.GetRecipes().ContinueWith(x =>
+            {
+                Recipes = x.Result;
+            });
 
             this.recipesManager.RecipeChanged += OnRecipeChanged;
 
@@ -31,6 +43,32 @@ namespace SmartOvenV2.ViewModels
             currentRecipeStep = -1;
         }
 
+        private void OnShowRecipeCommand(Recipe recipe)
+        {
+            if (this.SelectedRecipe == recipe)
+            {
+                this.SelectedTab = 1;
+            }
+            else
+            {
+                this.SelectedItem = recipe;
+                this.SelectedTab = 1;
+            }
+        }
+
+        private void OnCookCommand(Recipe recipe)
+        {
+            if(this.SelectedRecipe == recipe)
+            {
+                this.SelectedTab = 2;
+            } else
+            {
+                this.SelectedItem = recipe;
+                this.SelectedTab = 2;
+            }
+        }
+
+        private readonly IRecipesService recipesService;
         private readonly IRecipesManager recipesManager;
         private readonly IAppStatusManager appStatusManager;
         private readonly INotificationService notificationService;
@@ -41,6 +79,8 @@ namespace SmartOvenV2.ViewModels
         public Command StartCommand { get; set; }
         public ICommand PauseCommand { get; set; }
         public ICommand ResetCommand { get; set; }
+        public ICommand CookCommand { get; set; }
+        public ICommand ShowRecipeCommand { get; set; }
 
         public Recipe SelectedItem
         {
@@ -118,10 +158,6 @@ namespace SmartOvenV2.ViewModels
                 selectedRecipe = value;
                 Console.WriteLine("Selected recipe " + selectedRecipe);
                 this.OnPropertyChanged();
-                if (selectedRecipe != null)
-                {
-                    this.SelectedTab = 1;
-                }
             }
         }
 
@@ -139,8 +175,16 @@ namespace SmartOvenV2.ViewModels
         private Recipe selectedRecipe;
         private bool isPaused;
         private int selectedTab;
+        private Recipe[] recipes;
 
-        public IList<Recipe> Recipes { get; }
+        public Recipe[] Recipes
+        {
+            get => recipes; private set
+            {
+                recipes = value;
+                this.OnPropertyChanged();
+            }
+        }
 
 #if DEBUG
         //public bool TimerEnabled => true;
@@ -158,9 +202,16 @@ namespace SmartOvenV2.ViewModels
             }
         }
 
-        private void OnRecipeChanged(object sender, EventArgs args)
+        private async void OnRecipeChanged(object sender, EventArgs args)
         {
             this.SelectedRecipe = this.recipesManager.GetSelectedRecipe();
+            if (this.SelectedRecipe != null)
+            {
+                await this.recipesService.FillSteps(this.SelectedRecipe);
+                await this.recipesService.FillMethod(this.SelectedRecipe);
+                await this.recipesService.FillIngredients(this.SelectedRecipe);
+                Console.WriteLine("Selected Recipe Method" + String.Join(",", this.SelectedRecipe?.Method?.Select( x => x.Description)));
+            }
             this.appStatusManager.ResetRecipeTimer();
             StartCommand?.ChangeCanExecute();
         }

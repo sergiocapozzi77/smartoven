@@ -23,7 +23,7 @@ namespace SmartOvenV2.Droid
 
             try
             {
-                base.OnCreate(savedInstanceState);
+            base.OnCreate(savedInstanceState);
             }
             catch 
             {

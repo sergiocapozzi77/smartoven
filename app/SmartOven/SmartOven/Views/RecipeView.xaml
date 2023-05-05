@@ -19,6 +19,12 @@
     mc:Ignorable="d">
     <ContentPage.Resources>
         <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
+        <converters:ImageSourceConverter x:Key="ImageSourceConverter" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
         <tabView:SfTabView SelectedIndex="{Binding SelectedTab}" EnableSwiping="True">
@@ -26,6 +32,7 @@
                 <tabView:SfTabItem.Content>
                     <Grid>
                         <listView:SfListView
+                            x:Name="RecipesList"
                             Margin="0"
                             Padding="0,5,0,5"
                             BackgroundColor="#F0F0F0"
@@ -56,23 +63,27 @@
                                                 <ColumnDefinition Width="{OnPlatform Android={OnIdiom Phone=0.35*, Tablet=0.25*}, iOS={OnIdiom Phone=0.35*, Tablet=0.15*}, UWP={OnIdiom Desktop=auto, Phone=auto, Tablet=0.55*}, macOS=0.15*, WPF=auto}" />
                                                 <ColumnDefinition Width="{OnPlatform Android={OnIdiom Phone=0.65*, Tablet=0.75*}, iOS={OnIdiom Phone=0.65*, Tablet=0.85*}, UWP={OnIdiom Desktop=*, Phone=*, Tablet=0.15*}, macOS=*, WPF=*}" />
                                             </Grid.ColumnDefinitions>
-
+                                          
                                             <Image
                                                 Aspect="AspectFill"
                                                 HeightRequest="150"
                                                 HorizontalOptions="FillAndExpand"
                                                 Source="{Binding Image}"
                                                 VerticalOptions="FillAndExpand"
-                                                WidthRequest="150" />
-                                            <Grid Grid.Column="1">
-                                                <buttons:SfCheckBox
+                                                WidthRequest="150" 
+                                                />
+                                            <buttons:SfCheckBox
                                                     CornerRadius="10"
                                                     HeightRequest="28"
-                                                    HorizontalOptions="End"
+                                                    HorizontalOptions="Start"
                                                     InputTransparent="True"
+                                                    BorderWidth="3"
+                                                    UncheckedColor="{DynamicResource Gray-White}"
                                                     IsChecked="{Binding Path=IsSelected}"
                                                     VerticalOptions="Start"
                                                     WidthRequest="28" />
+                                            <Grid Grid.Column="1">
+                                              
 
                                                 <StackLayout Padding="10,0,0,0">
                                                     <StackLayout.VerticalOptions>
@@ -93,8 +104,42 @@
                                                                               WPF=26}"
                                                         LineBreakMode="CharacterWrap"
                                                         Text="{Binding ImageTitle}" />
-                                                    <Label FontSize="{OnPlatform Android={OnIdiom Phone=12, Tablet=13}, iOS={OnIdiom Phone=11, Tablet=13}, UWP={OnIdiom Phone=10, Tablet=14, Desktop=16}, macOS=13, WPF=16}" Text="{Binding TopTemperature, StringFormat='Top Temperature: {0:F1}°'}" />
-                                                    <Label FontSize="{OnPlatform Android={OnIdiom Phone=12, Tablet=13}, iOS={OnIdiom Phone=11, Tablet=13}, UWP={OnIdiom Phone=10, Tablet=14, Desktop=16}, macOS=13, WPF=16}" Text="{Binding BottomTemperature, StringFormat='Bottom Temperature: {0:F1}°'}" />
+                                                    <StackLayout Orientation="Horizontal">
+                                                        <Label FontSize="{OnPlatform Android={OnIdiom Phone=12, Tablet=13}, iOS={OnIdiom Phone=11, Tablet=13}, UWP={OnIdiom Phone=10, Tablet=14, Desktop=16}, macOS=13, WPF=16}" Text="{Binding TopTemperature, StringFormat='Top: {0:F1}°'}" />
+                                                        <Label FontSize="{OnPlatform Android={OnIdiom Phone=12, Tablet=13}, iOS={OnIdiom Phone=11, Tablet=13}, UWP={OnIdiom Phone=10, Tablet=14, Desktop=16}, macOS=13, WPF=16}" Text="{Binding TopTemperature, StringFormat=' / '}" />
+                                                        <Label FontSize="{OnPlatform Android={OnIdiom Phone=12, Tablet=13}, iOS={OnIdiom Phone=11, Tablet=13}, UWP={OnIdiom Phone=10, Tablet=14, Desktop=16}, macOS=13, WPF=16}" Text="{Binding BottomTemperature, StringFormat='Bottom: {0:F1}°'}" />
+                                                    </StackLayout>
+                                                    <StackLayout Orientation="Horizontal">
+                                                        <buttons:SfButton
+                                                        BackgroundColor="{DynamicResource PrimaryColor}"
+                                                        Command="{Binding BindingContext.ShowRecipeCommand, Source={x:Reference Name=RecipesList}}"
+                                                        CommandParameter="{Binding}"
+                                                        FontFamily="{StaticResource Montserrat-SemiBold}"
+                                                        FontSize="12"
+                                                        HeightRequest="30"
+                                                        HorizontalOptions="{OnIdiom Default=Center,
+                                                                                    Phone=FillAndExpand}"
+                                                        Style="{StaticResource SquareButtonStyle}"
+                                                        Text="RECIPE"
+                                                        TextColor="{DynamicResource Gray-White}"
+                                                        WidthRequest="{OnIdiom Default=100,
+                                                     Phone=-1}" />
+                                                        <buttons:SfButton
+                                                        BackgroundColor="{DynamicResource PrimaryColor}"
+                                                        Command="{Binding BindingContext.CookCommand, Source={x:Reference Name=RecipesList}}"
+                                                        CommandParameter="{Binding}"
+                                                        FontFamily="{StaticResource Montserrat-SemiBold}"
+                                                        FontSize="12"
+                                                        HeightRequest="30"
+                                                        HorizontalOptions="{OnIdiom Default=Center,
+                                                                                    Phone=FillAndExpand}"
+                                                        Style="{StaticResource SquareButtonStyle}"
+                                                        Text="COOK"
+                                                        TextColor="{DynamicResource Gray-White}"
+                                                        WidthRequest="{OnIdiom Default=100,
+                                                     Phone=-1}" />
+                                                    </StackLayout>
+                                                    
                                                 </StackLayout>
                                             </Grid>
                                         </Grid>
@@ -108,6 +153,106 @@
             </tabView:SfTabItem>
             <tabView:SfTabItem Title="Recipe">
                 <tabView:SfTabItem.Content>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <cards:SfCardView Grid.Row="0" Margin="10">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"></RowDefinition>
+                                        <RowDefinition Height="Auto"></RowDefinition>
+                                        <RowDefinition Height="0.3*"></RowDefinition>
+                                        <RowDefinition Height="Auto"></RowDefinition>
+                                        <RowDefinition Height="0.55*"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Label
+                                        FontAttributes="Bold"
+                                        Margin="0,2,0,0"
+                                        FontSize="18"
+                                        HorizontalTextAlignment="Center"
+                                        Text="{Binding SelectedRecipe.ImageTitle}"
+                                        TextColor="Black"
+                                        VerticalTextAlignment="Center" />
+
+                                    <Label Grid.Row="1"
+                                        BackgroundColor="White"
+                                        FontAttributes="Bold"
+                                        FontSize="16"
+                                        HorizontalTextAlignment="Start"
+                                        Text="Ingredients:"
+                                        TextColor="Gray"
+                                        Margin="5,2,0,0"/>
+
+                                    <listView:SfListView
+                                        VerticalOptions="Start"
+                                        Grid.Row="2"
+                                        Margin="5,0,0,0"
+                                        ItemSpacing="2,0,2,0"
+                                        ItemSize="24"
+                                        ItemsSource="{Binding SelectedRecipe.Ingredients}"
+                                        SelectionMode="None">
+                                        <listView:SfListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid BackgroundColor="White">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="0.20*" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <CheckBox/>
+                                                    <Label Grid.Column="1" HorizontalOptions="End" FontSize="{OnPlatform Android={OnIdiom Phone=18, Tablet=24}, iOS={OnIdiom Phone=11, Tablet=13}, UWP={OnIdiom Phone=10, Tablet=14, Desktop=16}, macOS=13, WPF=16}" 
+                                                        TextColor="Gray">
+                                                        <Label.Text>
+                                                            <MultiBinding StringFormat="{}{0} {1}">
+                                                                <Binding Path="Quantity" />
+                                                                <Binding Path="Unit" />
+                                                            </MultiBinding>
+                                                        </Label.Text>
+                                                    </Label>
+                                                    <Label Grid.Column="2" FontSize="{OnPlatform Android={OnIdiom Phone=18, Tablet=24}, iOS={OnIdiom Phone=11, Tablet=13}, UWP={OnIdiom Phone=10, Tablet=14, Desktop=16}, macOS=13, WPF=16}" 
+                                                            TextColor="Gray"
+                                                            Text="{Binding Name}" />
+                                                </Grid>
+                                            </DataTemplate>
+                                        </listView:SfListView.ItemTemplate>
+                                    </listView:SfListView>
+                                    <Label Grid.Row="3"
+                                        BackgroundColor="White"
+                                        FontAttributes="Bold"
+                                        FontSize="16"
+                                        HorizontalTextAlignment="Start"
+                                        Text="Method:"
+                                        TextColor="Gray"
+                                        Margin="5,2,0,0"/>
+                                    <listView:SfListView
+                                        VerticalOptions="Start"
+                                        Grid.Row="4"
+                                        Margin="5,0,0,0"
+                                        ItemSpacing="2,0,2,0"
+                                        AutoFitMode="Height"
+                                        ItemsSource="{Binding SelectedRecipe.Method}"
+                                        SelectionMode="None">
+                                        <listView:SfListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid BackgroundColor="White">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Label LineBreakMode="WordWrap" FontSize="{OnPlatform Android={OnIdiom Phone=16, Tablet=17}, iOS={OnIdiom Phone=11, Tablet=13}, UWP={OnIdiom Phone=10, Tablet=14, Desktop=16}, macOS=13, WPF=16}" 
+                                                            TextColor="Gray"
+                                                            Text="{Binding Description}" />
+                                                </Grid>
+                                            </DataTemplate>
+                                        </listView:SfListView.ItemTemplate>
+                                    </listView:SfListView>
+                                </Grid>
+                        </cards:SfCardView>
+                    </Grid>
+                </tabView:SfTabItem.Content>
+            </tabView:SfTabItem>
+            <tabView:SfTabItem Title="Cook">
+            <tabView:SfTabItem.Content>
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />

@@ -24,12 +24,13 @@ namespace PizzaTime.Bootstrap
 #else
             builder.RegisterType<StatusPoller>().As<IStatusPoller>().SingleInstance();
 #endif
-            builder.RegisterType<RecipesService>().As<IRecipesService>().SingleInstance();
+            builder.RegisterType<RecipesRemoteService>().As<IRecipesService>().SingleInstance();
             builder.RegisterType<RecipesManager>().As<IRecipesManager>().SingleInstance();
             builder.RegisterType<AppStatusManager>().As<IAppStatusManager>().SingleInstance();
             builder.RegisterType<OtaService>().As<IOtaService>().SingleInstance();
             builder.RegisterType<NotificationService>().As<INotificationService>().SingleInstance();
             builder.RegisterType<RecipeStepFactory>().As<IRecipeStepFactory>().SingleInstance();
+            builder.RegisterType<SeatableDataService>().As<ISeatableDataService>().SingleInstance();
 
             builder.RegisterType<OvenViewModel>();
             builder.RegisterType<InfoViewModel>();
