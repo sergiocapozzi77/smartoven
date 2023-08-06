@@ -166,6 +166,7 @@ namespace SmartOvenV2.Models
                 step.Status = StepStatus.NotStarted;
                 step.ProgressValue = 0;
             }
+            this.OnPropertyChanged(nameof(Steps));
         }
     }
 }

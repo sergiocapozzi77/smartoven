@@ -17,6 +17,7 @@ namespace SmartOvenV2.Services
     internal class SeatableDataService : ISeatableDataService
     {
         private HttpClient client;
+        private HttpClient imageUrlClient;
         public string access_token;
         string base_uuid;
 
@@ -26,6 +27,10 @@ namespace SmartOvenV2.Services
             client.DefaultRequestHeaders.Add("accept", "application/json");
 //            client.DefaultRequestHeaders.Add("content-type", "application/json");
             client.DefaultRequestHeaders.Add("authorization", "Bearer ea6fa8dd468f479db3e2528d55423b9d27c51622");
+
+            imageUrlClient = new HttpClient();
+            imageUrlClient.DefaultRequestHeaders.Add("accept", "application/json");
+            imageUrlClient.DefaultRequestHeaders.Add("authorization", "Bearer ea6fa8dd468f479db3e2528d55423b9d27c51622");
         }
 
         async Task GetBaseToken()
@@ -107,11 +112,9 @@ namespace SmartOvenV2.Services
 
         public async Task<string> GetImageLink(string image)
         {
-            await GetBaseToken();
-            
             var imagePath = "/images" + image.Split(new string[] { "/images" }, StringSplitOptions.RemoveEmptyEntries)[1];
             var url = $"https://cloud.seatable.io/api/v2.1/dtable/app-download-link/?path={imagePath}";
-            var response = await client.GetAsync(url);
+            var response = await imageUrlClient.GetAsync(url);
             if (response.IsSuccessStatusCode)
             {
                 string content = await response.Content.ReadAsStringAsync();
@@ -121,7 +124,7 @@ namespace SmartOvenV2.Services
             }
             else
             {
-                Console.WriteLine("Failed to retrieve image link from " + url);
+                Console.WriteLine("Failed to retrieve image link from " + url + " " + response.ReasonPhrase);
                 return "";
             }
         }

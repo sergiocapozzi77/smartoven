@@ -203,6 +203,7 @@
                 "C:/Users/sergi/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/dio_qspi/include",
                 "C:/Users/sergi/.platformio/packages/framework-arduinoespressif32/cores/esp32",
                 "C:/Users/sergi/.platformio/packages/framework-arduinoespressif32/variants/esp32",
+                "D:/Dev/Angular/smartoven/firmware/.pio/libdeps/esp32dev/Blynk",
                 "D:/Dev/Angular/smartoven/firmware/.pio/libdeps/esp32dev/LiquidCrystal",
                 "C:/Users/sergi/.platformio/packages/framework-arduinoespressif32/libraries/ArduinoOTA/src",
                 "C:/Users/sergi/.platformio/packages/framework-arduinoespressif32/libraries/AsyncUDP/src",
@@ -434,6 +435,7 @@
                     "C:/Users/sergi/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/dio_qspi/include",
                     "C:/Users/sergi/.platformio/packages/framework-arduinoespressif32/cores/esp32",
                     "C:/Users/sergi/.platformio/packages/framework-arduinoespressif32/variants/esp32",
+                    "D:/Dev/Angular/smartoven/firmware/.pio/libdeps/esp32dev/Blynk",
                     "D:/Dev/Angular/smartoven/firmware/.pio/libdeps/esp32dev/LiquidCrystal",
                     "C:/Users/sergi/.platformio/packages/framework-arduinoespressif32/libraries/ArduinoOTA/src",
                     "C:/Users/sergi/.platformio/packages/framework-arduinoespressif32/libraries/AsyncUDP/src",
@@ -469,7 +471,7 @@
                 ]
             },
             "defines": [
-                "PLATFORMIO=60105",
+                "PLATFORMIO=60107",
                 "ARDUINO_ESP32_DEV",
                 "HAVE_CONFIG_H",
                 "MBEDTLS_CONFIG_FILE=\"mbedtls/esp_config.h\"",

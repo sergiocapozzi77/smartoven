@@ -210,10 +210,15 @@ namespace SmartOvenV2.ViewModels
                 await this.recipesService.FillSteps(this.SelectedRecipe);
                 await this.recipesService.FillMethod(this.SelectedRecipe);
                 await this.recipesService.FillIngredients(this.SelectedRecipe);
+
+                this.SelectedRecipe.ClearStatus();
                 Console.WriteLine("Selected Recipe Method" + String.Join(",", this.SelectedRecipe?.Method?.Select( x => x.Description)));
             }
+
             this.appStatusManager.ResetRecipeTimer();
             StartCommand?.ChangeCanExecute();
+
+            StopTimer();
         }
 
         protected override void OnOvenStatusUpdated(OvenStatus status)
@@ -248,6 +253,7 @@ namespace SmartOvenV2.ViewModels
             this.SelectedRecipe.ClearStatus();
             this.SelectedRecipe.Steps.First().Status = StepStatus.Completed;
             this.SelectedRecipe.Steps.First().ProgressValue = 100;
+
 
 
             Device.StartTimer(TimeSpan.FromSeconds(1), () =>
@@ -314,6 +320,8 @@ namespace SmartOvenV2.ViewModels
                             {
                                 StopTimer();
                                 this.notificationService.ShowNotification("End: " + step.Title, "");
+                                this.dataService.SetTopMaxPower(10);
+                                this.dataService.SetBottomMaxPower(10);
                             }
 
                         }
@@ -348,7 +356,7 @@ namespace SmartOvenV2.ViewModels
 
         void StopTimer()
         {
-            this.cancellation.Cancel();
+            this.cancellation?.Cancel();
             IsStarted = false;
             IsPaused = false;
             //            this.selectedRecipe?.ClearStatus();

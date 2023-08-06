@@ -64,6 +64,8 @@ namespace SmartOvenV2.ViewModels
             this.FridgeLeavening = Preferences.Get(nameof(FridgeLeavening), 20);
             this.BigaPercentage = Preferences.Get(nameof(BigaPercentage), 70);
             this.BigaWaterPercentage = Preferences.Get(nameof(BigaWaterPercentage), 50);
+            this.SelectedPizzaType = (PizzaType)Preferences.Get(nameof(SelectedPizzaType), (int)PizzaType.Tray);
+            this.SelectedYeast = (Models.Yeast)Preferences.Get(nameof(SelectedYeast), (int)Models.Yeast.Dried1to2);
 
             FillTips();
 
