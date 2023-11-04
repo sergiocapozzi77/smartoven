@@ -320,8 +320,6 @@ namespace SmartOvenV2.ViewModels
                             {
                                 StopTimer();
                                 this.notificationService.ShowNotification("End: " + step.Title, "");
-                                this.dataService.SetTopMaxPower(10);
-                                this.dataService.SetBottomMaxPower(10);
                             }
 
                         }

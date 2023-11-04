@@ -250,7 +250,7 @@
                             <gauge:SfLinearGauge Grid.Column="1">
                                 <gauge:SfLinearGauge.Scales>
                                     <gauge:LinearScale
-                                        Interval="25"
+                                        Interval="10"
                                         LabelColor="Black"
                                         MinorTicksPerInterval="1"
                                         ScaleBarSize="12">
@@ -408,7 +408,7 @@
                             <gauge:SfLinearGauge Grid.Column="1">
                                 <gauge:SfLinearGauge.Scales>
                                     <gauge:LinearScale
-                                        Interval="25"
+                                        Interval="10"
                                         LabelColor="Black"
                                         MinorTicksPerInterval="1"
                                         ScaleBarSize="12">

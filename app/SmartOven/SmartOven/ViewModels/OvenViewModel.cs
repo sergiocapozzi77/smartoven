@@ -27,7 +27,7 @@ namespace SmartOvenV2.ViewModels
         {
             DeviceDisplay.KeepScreenOn = true;
             TopMinusPowerCommand = new Command(() => {
-                TopMaxPower -= 25;
+                TopMaxPower -= 10;
                 if (TopMaxPower < 0)
                 {
                     TopMaxPower = 0;
@@ -40,7 +40,7 @@ namespace SmartOvenV2.ViewModels
             });
 
             TopPlusPowerCommand = new Command(() => {
-                TopMaxPower += 25;
+                TopMaxPower += 10;
                 if (TopMaxPower > 100)
                 {
                     TopMaxPower = 100;
@@ -52,7 +52,7 @@ namespace SmartOvenV2.ViewModels
             });
 
             BottomMinusPowerCommand = new Command(() => {
-                BottomMaxPower -= 25;
+                BottomMaxPower -= 10;
                 if (BottomMaxPower < 0)
                 {
                     BottomMaxPower = 0;
@@ -64,7 +64,7 @@ namespace SmartOvenV2.ViewModels
             });
 
             BottomPlusPowerCommand = new Command(() => {
-                BottomMaxPower += 25;
+                BottomMaxPower += 10;
                 if (BottomMaxPower > 100)
                 {
                     BottomMaxPower = 100;

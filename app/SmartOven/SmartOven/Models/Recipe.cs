@@ -25,14 +25,14 @@ namespace SmartOvenV2.Models
         public string[] MethodsIds { get; private set; }
         public bool StepsLoaded { get; set; }
 
-        public Recipe(string id, string image, string imageTitle, double topTemperature, double bottomTemperature, string[] steps, string[] ingredientsIds, string[] methodsIds)
+        public Recipe(string id, string image, string imageTitle, double topTemperature, double bottomTemperature, string[] stepsIds, string[] ingredientsIds, string[] methodsIds)
         {
             Id = id;
             Image = image;
             ImageTitle = imageTitle;
             TopTemperature = topTemperature;
             BottomTemperature = bottomTemperature;
-            StepIds = steps;
+            StepIds = stepsIds;
             IngredientsIds = ingredientsIds;
             MethodsIds = methodsIds;
         }
