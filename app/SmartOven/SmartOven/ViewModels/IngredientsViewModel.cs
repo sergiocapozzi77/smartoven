@@ -44,6 +44,16 @@ namespace SmartOvenV2.ViewModels
         private double flourBigaDough;
         private int bigaWaterPercentage;
 
+        private double waterPool1;
+        private double waterPool2;
+        private double yeastPool;
+        private double saltPool;
+        private double flourPool;
+        private double fatPool;
+        private int poolPercentage;
+        private double flourPoolDough;
+        private int poolWaterPercentage;
+
         public IngredientsViewModel()
         {
             this.Yeasts = new List<string>
@@ -64,6 +74,7 @@ namespace SmartOvenV2.ViewModels
             this.FridgeLeavening = Preferences.Get(nameof(FridgeLeavening), 20);
             this.BigaPercentage = Preferences.Get(nameof(BigaPercentage), 70);
             this.BigaWaterPercentage = Preferences.Get(nameof(BigaWaterPercentage), 50);
+            this.PoolPercentage = Preferences.Get(nameof(PoolPercentage), 70);
             this.SelectedPizzaType = (PizzaType)Preferences.Get(nameof(SelectedPizzaType), (int)PizzaType.Tray);
             this.SelectedYeast = (Models.Yeast)Preferences.Get(nameof(SelectedYeast), (int)Models.Yeast.Dried1to2);
 
@@ -205,6 +216,72 @@ namespace SmartOvenV2.ViewModels
             }
         }
 
+        // POOLISH
+
+        public double WaterPool1
+        {
+            get => this.waterPool1;
+            set
+            {
+                this.SetProperty(ref this.waterPool1, value);
+            }
+        }
+
+        public double WaterPool2
+        {
+            get => this.waterPool2;
+            set
+            {
+                this.SetProperty(ref this.waterPool2, value);
+            }
+        }
+
+        public double YeastPool
+        {
+            get => this.yeastPool;
+            set
+            {
+                this.SetProperty(ref this.yeastPool, value);
+            }
+        }
+        public double SaltPool
+        {
+            get => this.saltPool;
+            set
+            {
+                this.SetProperty(ref this.saltPool, value);
+            }
+        }
+
+        public double FlourPool
+        {
+            get => this.flourPool;
+            set
+            {
+                this.SetProperty(ref this.flourPool, value);
+            }
+        }
+
+        public double FlourPoolDough
+        {
+            get => this.flourPoolDough;
+            set
+            {
+                this.SetProperty(ref this.flourPoolDough, value);
+                OnPropertyChanged(nameof(NeedFlourPoolDough));
+            }
+        }
+
+        public double FatPool
+        {
+            get => this.fatPool;
+            set
+            {
+                this.SetProperty(ref this.fatPool, value);
+            }
+        }
+
+
         public bool OilNeeded
         {
             get => this.oilNeeded;
@@ -274,6 +351,17 @@ namespace SmartOvenV2.ViewModels
             {
                 this.SetProperty(ref this.bigaPercentage, value);
                 Preferences.Set(nameof(BigaPercentage), value);
+                this.Recalculate();
+            }
+        }
+
+        public int PoolPercentage
+        {
+            get => this.poolPercentage;
+            set
+            {
+                this.SetProperty(ref this.poolPercentage, value);
+                Preferences.Set(nameof(PoolPercentage), value);
                 this.Recalculate();
             }
         }
@@ -354,6 +442,14 @@ namespace SmartOvenV2.ViewModels
             this.FlourBigaDough = k - this.FlourBiga;
             this.SaltBiga = x;
             this.FatBiga = w;
+
+            this.WaterPool1 = S * (this.PoolPercentage / 100.0);
+            this.FlourPool = this.WaterPool1;
+            this.WaterPool2 = S - this.WaterPool1;
+            this.YeastPool = AdjustYeast(this.FlourPool * 0.02);
+            this.FlourPoolDough = k - this.FlourPool;
+            this.SaltPool = x;
+            this.FatPool = w;
         }
 
         double AdjustYeast(double yeast)
@@ -418,7 +514,9 @@ namespace SmartOvenV2.ViewModels
             }
         }
 
-        public bool NeedFlourBigaDough => this.FlourBigaDough > 0;       
+        public bool NeedFlourBigaDough => this.FlourBigaDough > 0;
+
+        public bool NeedFlourPoolDough => this.FlourPoolDough > 0;
 
         public int WaterPerc
         {

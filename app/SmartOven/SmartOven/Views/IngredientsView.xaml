@@ -982,7 +982,7 @@
                                         HorizontalOptions="CenterAndExpand"
                                         LineHeight="{OnPlatform Android=1.5,
                                                                 Default=-1}"
-                                        Text="Vegetable Oil:"
+                                        Text="Oil:"
                                         TextColor="{DynamicResource Gray-900}"
                                         VerticalOptions="Center"
                                         VerticalTextAlignment="Center" />
@@ -993,7 +993,7 @@
                                         HorizontalOptions="CenterAndExpand"
                                         LineHeight="{OnPlatform Android=1.5,
                                                                 Default=-1}"
-                                        Text="{Binding OilBiga, StringFormat='{0} gr'}"
+                                        Text="{Binding FatBiga, StringFormat='{0:F0} gr'}"
                                         TextColor="{DynamicResource Gray-900}"
                                         VerticalOptions="Center"
                                         VerticalTextAlignment="Center" />
@@ -1002,7 +1002,283 @@
                         </tabView:SfTabItem.Content>
                     </tabView:SfTabItem>
                     <tabView:SfTabItem Title="Poolish">
-                        <tabView:SfTabItem.Content />
+                        <tabView:SfTabItem.Content>
+                            <StackLayout Orientation="Vertical">
+                                <Label
+                                    FontFamily="{StaticResource Montserrat-Bold}"
+                                    FontSize="16"
+                                    HeightRequest="45"
+                                    HorizontalOptions="CenterAndExpand"
+                                    LineHeight="{OnPlatform Android=1.5,
+                                                            Default=-1}"
+                                    Text="For Poolish"
+                                    TextColor="{DynamicResource Gray-900}"
+                                    VerticalOptions="Center"
+                                    VerticalTextAlignment="Center" />
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Label
+                                        FontFamily="{StaticResource Montserrat-Medium}"
+                                        FontSize="12"
+                                        HeightRequest="45"
+                                        HorizontalOptions="Center"
+                                        LineHeight="{OnPlatform Android=1.5,
+                                                                Default=-1}"
+                                        Text="Percentage of Poolish in the final dough:"
+                                        TextColor="{DynamicResource Gray-900}"
+                                        VerticalOptions="Center"
+                                        VerticalTextAlignment="Center" />
+                                    <range:SfRangeSlider
+                                        Grid.Column="1"
+                                        Maximum="100"
+                                        Minimum="50"
+                                        RangeStart="50"
+                                        ShowRange="false"
+                                        ShowValueLabel="true"
+                                        StepFrequency="1"
+                                        Value="{Binding PoolPercentage}" />
+                                </Grid>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <StackLayout
+                                        HorizontalOptions="Center"
+                                        Orientation="Horizontal"
+                                        VerticalOptions="Center">
+                                        <Label
+                                            FontFamily="{StaticResource Montserrat-Medium}"
+                                            FontSize="16"
+                                            HeightRequest="45"
+                                            HorizontalOptions="Center"
+                                            LineHeight="{OnPlatform Android=1.5,
+                                                                    Default=-1}"
+                                            Text="Flour:"
+                                            TextColor="{DynamicResource Gray-900}"
+                                            VerticalOptions="Center"
+                                            VerticalTextAlignment="Center" />
+                                        <controls:TipImage
+                                            Margin="0,13,0,0"
+                                            HorizontalOptions="Start"
+                                            HorizontalTextAlignment="Start"
+                                            TipText="{Binding FlourTip}"
+                                            VerticalOptions="Center" />
+                                    </StackLayout>
+                                    <Label
+                                        Grid.Column="1"
+                                        FontFamily="{StaticResource Montserrat-Medium}"
+                                        FontSize="16"
+                                        HorizontalOptions="CenterAndExpand"
+                                        LineHeight="{OnPlatform Android=1.5,
+                                                                Default=-1}"
+                                        Text="{Binding FlourPool, StringFormat='{0:F0} gr'}"
+                                        TextColor="{DynamicResource Gray-900}"
+                                        VerticalOptions="Center"
+                                        VerticalTextAlignment="Center" />
+                                </Grid>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <StackLayout
+                                        HorizontalOptions="Center"
+                                        Orientation="Horizontal"
+                                        VerticalOptions="Center">
+                                        <Label
+                                            FontFamily="{StaticResource Montserrat-Medium}"
+                                            FontSize="16"
+                                            HeightRequest="45"
+                                            HorizontalOptions="Center"
+                                            LineHeight="{OnPlatform Android=1.5,
+                                                                    Default=-1}"
+                                            Text="Water:"
+                                            TextColor="{DynamicResource Gray-900}"
+                                            VerticalOptions="Center"
+                                            VerticalTextAlignment="Center" />
+                                        <controls:TipImage
+                                            Margin="0,13,0,0"
+                                            HorizontalOptions="Start"
+                                            HorizontalTextAlignment="Start"
+                                            TipText="{Binding WaterTip}"
+                                            VerticalOptions="Center" />
+                                    </StackLayout>
+                                    <Label
+                                        Grid.Column="1"
+                                        FontFamily="{StaticResource Montserrat-Medium}"
+                                        FontSize="16"
+                                        HorizontalOptions="CenterAndExpand"
+                                        LineHeight="{OnPlatform Android=1.5,
+                                                                Default=-1}"
+                                        Text="{Binding WaterPool1, StringFormat='{0:F0} gr'}"
+                                        TextColor="{DynamicResource Gray-900}"
+                                        VerticalOptions="Center"
+                                        VerticalTextAlignment="Center" />
+                                </Grid>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Label
+                                        FontFamily="{StaticResource Montserrat-Medium}"
+                                        FontSize="16"
+                                        HeightRequest="45"
+                                        HorizontalOptions="CenterAndExpand"
+                                        LineHeight="{OnPlatform Android=1.5,
+                                                                Default=-1}"
+                                        Text="Yeast:"
+                                        TextColor="{DynamicResource Gray-900}"
+                                        VerticalOptions="Center"
+                                        VerticalTextAlignment="Center" />
+                                    <Label
+                                        Grid.Column="1"
+                                        FontFamily="{StaticResource Montserrat-Medium}"
+                                        FontSize="16"
+                                        HorizontalOptions="CenterAndExpand"
+                                        LineHeight="{OnPlatform Android=1.5,
+                                                                Default=-1}"
+                                        Text="{Binding YeastPool, StringFormat='{0:F2} gr'}"
+                                        TextColor="{DynamicResource Gray-900}"
+                                        VerticalOptions="Center"
+                                        VerticalTextAlignment="Center" />
+                                </Grid>
+                                <Label
+                                    FontFamily="{StaticResource Montserrat-Bold}"
+                                    FontSize="16"
+                                    HeightRequest="45"
+                                    HorizontalOptions="CenterAndExpand"
+                                    LineHeight="{OnPlatform Android=1.5,
+                                                            Default=-1}"
+                                    Text="For the Dough"
+                                    TextColor="{DynamicResource Gray-900}"
+                                    VerticalOptions="Center"
+                                    VerticalTextAlignment="Center" />
+                                <Grid IsVisible="{Binding NeedFlourPoolDough}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Label
+                                        FontFamily="{StaticResource Montserrat-Medium}"
+                                        FontSize="16"
+                                        HeightRequest="45"
+                                        HorizontalOptions="Center"
+                                        LineHeight="{OnPlatform Android=1.5,
+                                                                Default=-1}"
+                                        Text="Flour:"
+                                        TextColor="{DynamicResource Gray-900}"
+                                        VerticalOptions="Center"
+                                        VerticalTextAlignment="Center" />
+                                    <Label
+                                        Grid.Column="1"
+                                        FontFamily="{StaticResource Montserrat-Medium}"
+                                        FontSize="16"
+                                        HorizontalOptions="CenterAndExpand"
+                                        LineHeight="{OnPlatform Android=1.5,
+                                                                Default=-1}"
+                                        Text="{Binding FlourPoolDough, StringFormat='{0:F0} gr'}"
+                                        TextColor="{DynamicResource Gray-900}"
+                                        VerticalOptions="Center"
+                                        VerticalTextAlignment="Center" />
+                                </Grid>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <StackLayout
+                                        HorizontalOptions="Center"
+                                        Orientation="Horizontal"
+                                        VerticalOptions="Center">
+                                        <Label
+                                            FontFamily="{StaticResource Montserrat-Medium}"
+                                            FontSize="16"
+                                            HeightRequest="45"
+                                            HorizontalOptions="Center"
+                                            LineHeight="{OnPlatform Android=1.5,
+                                                                    Default=-1}"
+                                            Text="Water:"
+                                            TextColor="{DynamicResource Gray-900}"
+                                            VerticalOptions="Center"
+                                            VerticalTextAlignment="Center" />
+                                    </StackLayout>
+                                    <Label
+                                        Grid.Column="1"
+                                        FontFamily="{StaticResource Montserrat-Medium}"
+                                        FontSize="16"
+                                        HorizontalOptions="CenterAndExpand"
+                                        LineHeight="{OnPlatform Android=1.5,
+                                                                Default=-1}"
+                                        Text="{Binding WaterPool2, StringFormat='{0:F0} gr'}"
+                                        TextColor="{DynamicResource Gray-900}"
+                                        VerticalOptions="Center"
+                                        VerticalTextAlignment="Center" />
+                                </Grid>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Label
+                                        FontFamily="{StaticResource Montserrat-Medium}"
+                                        FontSize="16"
+                                        HeightRequest="45"
+                                        HorizontalOptions="CenterAndExpand"
+                                        LineHeight="{OnPlatform Android=1.5,
+                                                                Default=-1}"
+                                        Text="Salt:"
+                                        TextColor="{DynamicResource Gray-900}"
+                                        VerticalOptions="Center"
+                                        VerticalTextAlignment="Center" />
+                                    <Label
+                                        Grid.Column="1"
+                                        FontFamily="{StaticResource Montserrat-Medium}"
+                                        FontSize="16"
+                                        HorizontalOptions="CenterAndExpand"
+                                        LineHeight="{OnPlatform Android=1.5,
+                                                                Default=-1}"
+                                        Text="{Binding SaltPool, StringFormat='{0:F0} gr'}"
+                                        TextColor="{DynamicResource Gray-900}"
+                                        VerticalOptions="Center"
+                                        VerticalTextAlignment="Center" />
+                                </Grid>
+                                <Grid IsVisible="{Binding OilNeeded}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Label
+                                        FontFamily="{StaticResource Montserrat-Medium}"
+                                        FontSize="16"
+                                        HeightRequest="45"
+                                        HorizontalOptions="CenterAndExpand"
+                                        LineHeight="{OnPlatform Android=1.5,
+                                                                Default=-1}"
+                                        Text="Oil:"
+                                        TextColor="{DynamicResource Gray-900}"
+                                        VerticalOptions="Center"
+                                        VerticalTextAlignment="Center" />
+                                    <Label
+                                        Grid.Column="1"
+                                        FontFamily="{StaticResource Montserrat-Medium}"
+                                        FontSize="16"
+                                        HorizontalOptions="CenterAndExpand"
+                                        LineHeight="{OnPlatform Android=1.5,
+                                                                Default=-1}"
+                                        Text="{Binding FatPool, StringFormat='{0:F0} gr'}"
+                                        TextColor="{DynamicResource Gray-900}"
+                                        VerticalOptions="Center"
+                                        VerticalTextAlignment="Center" />
+                                </Grid>
+                            </StackLayout>
+                        </tabView:SfTabItem.Content>
                     </tabView:SfTabItem>
                 </tabView:SfTabView>
 
