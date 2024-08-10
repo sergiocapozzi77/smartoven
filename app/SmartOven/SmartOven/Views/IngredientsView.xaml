@@ -756,7 +756,7 @@
                                     <range:SfRangeSlider
                                         Grid.Column="1"
                                         Maximum="100"
-                                        Minimum="50"
+                                        Minimum="20"
                                         RangeStart="50"
                                         ShowRange="false"
                                         ShowValueLabel="true"
@@ -1035,7 +1035,7 @@
                                     <range:SfRangeSlider
                                         Grid.Column="1"
                                         Maximum="100"
-                                        Minimum="50"
+                                        Minimum="20"
                                         RangeStart="50"
                                         ShowRange="false"
                                         ShowValueLabel="true"
