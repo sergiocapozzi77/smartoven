@@ -100,9 +100,16 @@ namespace SmartOvenV2.Models
                 recipe.Value<string>("Name"),
                 recipe.Value<double>("Starting Top Temperature"),
                 recipe.Value<double>("Starting Bottom Temperature"),
-                recipe.Value<JArray>("Steps")?.ToObject<string[]>(),
-                recipe.Value<JArray>("Ingredients")?.ToObject<string[]>(),
-                recipe.Value<JArray>("Method")?.ToObject<string[]>()
+                recipe.Value<JArray>("Steps")?
+                .Select(s => s.Value<string>("row_id"))
+                .Where(s => s != null)
+                .ToArray(),
+                recipe.Value<JArray>("Ingredients")?.Select(s => s.Value<string>("row_id"))
+                .Where(s => s != null)
+                .ToArray(),
+                recipe.Value<JArray>("Method")?.Select(s => s.Value<string>("row_id"))
+                .Where(s => s != null)
+                .ToArray()
                 );
         }
 

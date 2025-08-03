@@ -13,6 +13,7 @@ namespace SmartOvenV2.Views
         public MainPage()
         {
             InitializeComponent();
+            NavigationPage.SetHasNavigationBar(this, value: false);
         }
     }
 }

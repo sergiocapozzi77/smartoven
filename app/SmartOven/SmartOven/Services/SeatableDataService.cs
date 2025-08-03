@@ -58,7 +58,7 @@ namespace SmartOvenV2.Services
         {
             await GetBaseToken();
 
-            var response = await client.GetAsync($"https://cloud.seatable.io/dtable-server/api/v1/dtables/{this.base_uuid}/rows/?table_name={table}");
+            var response = await client.GetAsync($"https://cloud.seatable.io/api-gateway/api/v2/dtables/{this.base_uuid}/rows/?table_name={table}&convert_keys=true");
             if (response.IsSuccessStatusCode)
             {
                 string content = await response.Content.ReadAsStringAsync();
@@ -89,7 +89,7 @@ namespace SmartOvenV2.Services
             var requestContent = new StringContent(sql.ToString(), Encoding.UTF8, "application/json");
 
             Console.WriteLine("GetDataSql request: " + sql.ToString());
-            var response = await client.PostAsync($"https://cloud.seatable.io/dtable-db/api/v1/query/{this.base_uuid}", requestContent);
+            var response = await client.PostAsync($"https://cloud.seatable.io/api-gateway/api/v2/dtables/{this.base_uuid}/sql", requestContent);
             if (response.IsSuccessStatusCode)
             {
                 string content = await response.Content.ReadAsStringAsync();
