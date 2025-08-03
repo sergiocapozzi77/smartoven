@@ -6,6 +6,8 @@ Smart Oven is an oven that has no controls on its panel, all settings are manage
   <img src="./img/OvenMain.png" alt="overview" width="800">
 </p>
 
+Visit my wordpress website for more info: https://pizzasmartoven.wordpress.com/
+
 # The Project
 
 The project has 2 modules:
